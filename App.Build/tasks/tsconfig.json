@@ -1,0 +1,26 @@
+﻿{
+  "extends": "../configs/tsconfig-base.json",
+  "compileOnSave": true,
+  "compilerOptions":
+  {
+    "baseUrl": "./",
+    "lib":
+    [
+      "es2015",
+      "es2016"
+    ],
+    "sourceMap": true,
+    "module":    "commonjs",
+    "paths":
+    {
+      "*": ["*", "../../Library/source/*"]
+    },
+    "typeRoots":
+    [
+      "./@types",
+      "../node_modules/@types"
+      //"../../Library/source/@surface/@types"
+    ]
+  },
+  "include": ["./"]
+}

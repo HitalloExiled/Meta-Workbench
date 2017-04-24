@@ -1,0 +1,21 @@
+﻿{
+  "extends": "../configs/tsconfig-base.json",
+  "compilerOptions":
+  {
+    "baseUrl": "./",
+    "lib":
+    [
+      "dom",
+      "es2015",
+      "es2016"
+    ],
+    "module":    "es2015",
+    "noEmit":    true,
+    "sourceMap": true,
+    "typeRoots":
+    [
+      "../node_modules/@types"
+    ]
+  },
+  "include": ["./"]
+}

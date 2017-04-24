@@ -1,0 +1,33 @@
+﻿:host
+{
+    display: flex;
+    > * { margin: auto; }
+}
+
+:host([v]),
+:host([vertical]),
+:host([orientaion="vertical"])
+{
+    flex-direction: column;
+    height:         100%;
+    overflow:       auto;
+
+    &[reverse]
+    {
+        flex-direction: column-reverse;
+    }
+}
+
+:host([h]),
+:host([horizontal]),
+:host([orientaion="horizontal"])
+{
+    flex-direction: row;
+    width:          100%;
+    overflow:       auto;
+
+    &[reverse]
+    {
+        flex-direction: row-reverse;
+    }
+}

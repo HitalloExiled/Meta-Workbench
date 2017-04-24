@@ -1,0 +1,33 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions":
+  {
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict":                 true,
+    "baseUrl":                      "./",
+    "emitDecoratorMetadata":        true,
+    "experimentalDecorators":       true,
+    "importHelpers":                true,
+    "lib":
+    [
+      "es2015",
+      "es2016"
+    ],
+    "module":                         "commonjs",
+    "moduleResolution":               "node",
+    "noEmitOnError":                  true,
+    "noImplicitReturns":              true,
+    "noImplicitThis":                 true,
+    "noUnusedLocals":                 true,
+    "sourceMap":                      true,
+    "strictNullChecks":               true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target":                         "es6",
+    "typeRoots":
+    [
+      "../node_modules/@types"
+    ]
+  },
+  "include": ["./"],
+  "exclude": ["node_modules"]
+}

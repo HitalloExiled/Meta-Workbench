@@ -1,0 +1,24 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "workbench.iconTheme": "vs-seti",
+    "files.exclude":
+    {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.vs": true,
+        "**/.DS_Store": true,
+        "**/*.sln": true,
+        "**/**/*.config": true,
+        "**/**/*.js": true,
+        "**/**/*.map": true,
+        "**/**/*.csproj": true,
+        "**/**/*.csproj.user": true,
+        "**/**/Properties": true,
+        "**/**/bin": true,
+        "**/**/obj": true,
+        "**/**/node_modules": true,
+        "**/packages": true
+    }
+}
