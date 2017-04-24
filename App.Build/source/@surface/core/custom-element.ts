@@ -59,11 +59,7 @@
      */
     public attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string): void
     {
-        console.log(attributeName);
-        if (attributeName in this)
-            this[attributeName] = newValue;
-        else if (attributeName in this.style)
-            this.style[attributeName] = newValue;
+        console.log(`attributeName: ${attributeName}, newValue: ${newValue}`);
     }
 
     /** Called when the element is adopted into a new document */

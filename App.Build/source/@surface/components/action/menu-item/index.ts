@@ -4,8 +4,8 @@ import { component, observe } from "@surface/core/decorators";
 import template from "index.html";
 import style    from "index.scss";
 
-@observe("action", "label", "active")
 @component("action-menu-item", template, style)
+@observe("action", "label", "active")
 export class MenuItem extends CustomElement
 {
     public get active(): boolean

@@ -9,8 +9,8 @@ export namespace Stack
     export type Orientation = "vertical"|"horizontal";
 }
 
-@observe("width", "height", "orientation")
 @component("layout-stack", template, style)
+@observe("width", "height", "orientation")
 export class Stack extends CustomElement
 {
     private _orientation: Stack.Orientation;
