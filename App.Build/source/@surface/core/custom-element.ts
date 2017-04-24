@@ -1,4 +1,5 @@
-﻿export abstract class CustomElement extends HTMLElement
+﻿import { traverseElement, parseTextNode } from '@surface/core/utils';
+export abstract class CustomElement extends HTMLElement
 {
     private _template: Nullable<HTMLTemplateElement>;
 	public get template(): Nullable<HTMLTemplateElement>
@@ -23,7 +24,24 @@
             ShadyCSS.styleElement(this);
             
         if (this._template)
-            this.attachShadow({ mode: "open" }).appendChild(document.importNode(this._template.content, true));
+        {
+            let content = document.importNode(this._template.content, true);
+            this.applyDateBind(content);
+            this.attachShadow({ mode: "open" }).appendChild(content);
+        }
+    }
+
+    private applyDateBind(content: Node): void
+    {
+        traverseElement
+        (
+            content,
+            node =>
+            {
+                if (node.nodeType == Node.TEXT_NODE)
+                    parseTextNode(node, this);
+            }
+        );
     }
 
     public attach<T extends HTMLElement>(selector: string): T

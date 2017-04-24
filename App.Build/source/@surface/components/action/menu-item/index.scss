@@ -1,11 +1,15 @@
 :host
 {
-  margin:           2px;
   background-color: lightseagreen;  
   width:            100%;
   text-align:       center;
   color:            white;
-  border-bottom:    solid 1px green;
+  border-bottom:    solid 2px green;
+}
+
+:host(:hover)
+{
+    cursor: context-menu;
 }
 
 :host(:active)
@@ -16,6 +20,6 @@
 :host([active]),
 :host([active="true"])
 {
-    border-bottom:    solid 1px green;
+    border-bottom:    solid 2px green;
     background-color: #00cc00;
 }

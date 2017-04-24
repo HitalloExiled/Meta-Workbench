@@ -1,7 +1,7 @@
 import { View } from "@surface/core/view";
 export function loadView(view: string): Promise<Constructor<View>>
 {
-    return load(view);    
+    return load(view);
 }
 
 function load(view: string): Promise<Constructor<View>>
