@@ -1,20 +1,21 @@
 :host
 {
-  background-color: lightseagreen;  
-  width:            100%;
-  text-align:       center;
-  color:            white;
-  border-bottom:    solid 2px green;
+    background-color: lightseagreen;  
+    width:            100%;
+    text-align:       center;
+    color:            white;
+    border-bottom:    solid 2px green;
 }
 
 :host(:hover)
 {
     cursor: context-menu;
+    background-color: #00cc00;
 }
 
 :host(:active)
 {
-    background-color: #00cc00;
+    background-color: #005500;
 }
 
 :host([active]),

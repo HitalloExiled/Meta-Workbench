@@ -1,33 +1,44 @@
 ﻿:host
 {
+    position: relative;
     display: flex;
-    > * { margin: auto; }
+    ::slotted(*)
+    {
+        //display: flex;
+        //position: absolute;
+        margin: auto;
+    }
 }
 
+:host,
 :host([v]),
 :host([vertical]),
-:host([orientaion="vertical"])
+:host([orientation="vertical"]),
+:host([v])
 {
+    width:   100%;
     flex-direction: column;
-    height:         100%;
-    overflow:       auto;
-
-    &[reverse]
-    {
-        flex-direction: column-reverse;
-    }
 }
 
 :host([h]),
 :host([horizontal]),
-:host([orientaion="horizontal"])
+:host([orientation="horizontal"])
 {
+    height:  100%;
     flex-direction: row;
-    width:          100%;
-    overflow:       auto;
+}
 
-    &[reverse]
-    {
-        flex-direction: row-reverse;
-    }
+:host([reverse])
+:host([v][reverse]),
+:host([vertical][reverse]),
+:host([orientation="vertical"][reverse])
+{
+    flex-direction: column-reverse;
+}
+
+:host([h][reverse]),
+:host([horizontal][reverse]),
+:host([orientation="horizontal"][reverse])
+{
+    flex-direction: row-reverse;
 }

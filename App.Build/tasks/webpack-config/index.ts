@@ -51,7 +51,7 @@ export default (env: string) =>
                     ]
                 },
                 {
-                    test: /\.scss$/,
+                    test: /\.s[ac]ss$/,
                     use:
                     [
                         { loader: "to-string-loader" },
@@ -67,7 +67,7 @@ export default (env: string) =>
                             loader: "html-loader",
                             options:
                             {
-                                attrs: ['img:src', 'link:href'],
+                                attrs: ["img:src", "link:href", "script:src"],
                                 interpolate: "require",
                                 minify: true
                             }

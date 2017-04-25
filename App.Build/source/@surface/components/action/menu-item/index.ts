@@ -10,22 +10,21 @@ export class MenuItem extends CustomElement
 {
     public get active(): boolean
     {
-        return this.getAttribute("active") == "true";
+        return super.getAttribute("active") == "true";
     }
 
     public set active(value: boolean)
     {
-        this.setAttribute("active", value ? "true" : "false");
+        super.letAttribute("active", value ? "true" : "false");
     }
-        
     public get label(): string
     {
-        return this.getAttribute("label") || "";
+        return super.getAttribute("label") || "";
     }
 
     public set label(value: string)
     {
-        this.setAttribute("label", value);
+        super.letAttribute("label", value);
     }
     
     private _subMenuItems: Array<MenuItem>;
@@ -41,16 +40,11 @@ export class MenuItem extends CustomElement
 
     public get action(): string
     {
-        return this.getAttribute("action") || "";
+        return super.getAttribute("action") || "";
     }
 
     public set action(value: string)
     {
-        this.setAttribute("action", value);
-    }
-
-    public attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string): void
-    {
-        super.attributeChangedCallback(attributeName, oldValue, newValue, namespace);
+        super.letAttribute("action", value);
     }
 }

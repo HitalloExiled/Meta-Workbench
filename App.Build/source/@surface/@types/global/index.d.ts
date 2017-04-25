@@ -22,6 +22,12 @@ declare module '*.scss'
     export default  _;
 }
 
+declare module '*.sass'
+{
+    var _: string;
+    export default  _;
+}
+
 declare module '*.css'
 {
     var _: string;

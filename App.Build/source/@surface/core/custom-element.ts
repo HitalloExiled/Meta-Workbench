@@ -1,7 +1,12 @@
-﻿import { traverseElement, parseTextNode } from '@surface/core/utils';
+﻿import "@surface/core/extensions/array";
+import "@surface/core/extensions/node-list";
+
+import { traverseElement, parseTextNode } from '@surface/core/utils';
 export abstract class CustomElement extends HTMLElement
 {
     private _template: Nullable<HTMLTemplateElement>;
+    protected $preventAttributeChangedCallback: boolean = false;
+
 	public get template(): Nullable<HTMLTemplateElement>
     {
 		return this._template;
@@ -44,28 +49,40 @@ export abstract class CustomElement extends HTMLElement
         );
     }
 
-    public attach<T extends HTMLElement>(selector: string): T
+    protected letAttribute(attributeName: string, value: string): void
     {
-        if (this.shadowRoot)
-            return this.shadowRoot.querySelector(selector) as T;
-        else
-            return this.querySelector(selector) as T;
+        this.$preventAttributeChangedCallback = true;
+        super.setAttribute(attributeName, value);
     }
 
-    public attachAll<T extends HTMLElement>(selector: string): Array<T>
+    public attachAll<T extends HTMLElement>(selector: string, slotName?: string): Array<T>
     {
         if (this.shadowRoot)
-            return this.shadowRoot.querySelectorAll(selector).toArray() as Array<T>;
+        {
+            let slots = this.shadowRoot
+                .querySelectorAll(slotName ? `slot[name="${slotName}"]` : "slot");
+
+            if (slots.length > 0)
+            {            
+                return slots.toArray()
+                    .map((slot: HTMLSlotElement) => slot.assignedNodes().filter((x: HTMLElement) => x.localName == selector))
+                    .flat() as Array<T>;
+            }
+            else
+                return this.shadowRoot.querySelectorAll(selector).toArray() as Array<T>;
+        }
         else
-            return this.querySelectorAll(selector).toArray() as Array<T>;
+            throw new Error("Element don't has shadowRoot");
+    }
+
+    public attach<T extends HTMLElement>(selector: string, slotName?: string)
+    {
+        return this.attachAll<T>(selector, slotName)[0];
     }
 
     /** Called when the element is created or upgraded */
     public connectedCallback(): void
-    {
-        //if (this._template)
-        //    this.appendChild(document.importNode(this._template.content, true));
-    }
+    { }
 
     /** Called when the element is inserted into a document, including into a shadow tree */
     public disconnectedCallback(): void
@@ -77,7 +94,16 @@ export abstract class CustomElement extends HTMLElement
      */
     public attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string): void
     {
-        console.log(`attributeName: ${attributeName}, newValue: ${newValue}`);
+        if (this.$preventAttributeChangedCallback)
+        {
+            this.$preventAttributeChangedCallback = false;
+            return;
+        }
+
+        if (attributeName in this.style)
+            this.style[attributeName] = newValue;
+        else
+            this[attributeName] = newValue;
     }
 
     /** Called when the element is adopted into a new document */

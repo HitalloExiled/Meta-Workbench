@@ -1,5 +1,6 @@
 import "dependencies";
-import "@surface/core/extensions/node-list";
+
+import "@surface/components/layout/stack";
 
 import "@surface/components/action/menu";
 import { Menu } from "@surface/components/action/menu";

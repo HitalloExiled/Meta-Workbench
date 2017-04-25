@@ -1,3 +1,5 @@
+import "@surface/components/layout/stack";
+
 import { component } from "@surface/core/decorators";
 import { View } from "@surface/core/view";
 
@@ -7,6 +9,11 @@ import style    from "index.scss";
 @component("view-product-catalog", template, style)
 export class ProductCatalog extends View
 {
+    public get title(): string
+    {
+        return "Catálogo de produtos";
+    }
+
     constructor()
     {
         super();

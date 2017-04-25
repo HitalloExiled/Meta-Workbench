@@ -71,18 +71,18 @@ export function parseTextNode(node: Node, context: object): void
                             );
                         }
                     }
-                    let fragments =
+                    let fragments = () =>
                     [
                         () => item[1] || "",
                         () => context[propertyName] || "",
                         () => item[3] || "",
                         () => item[4] || ""
-                    ];
+                    ].map(x => x()).join("");
                     return fragments;
                 }
             );
 
-            onChange = () => node.nodeValue = fragments.map(x => x.map(y => y()).join("")).join("");
+            onChange = () => node.nodeValue = fragments.map(x => x()).join("");
             onChange();
         }
     }
