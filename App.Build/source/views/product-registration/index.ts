@@ -9,6 +9,11 @@ import style    from "index.scss";
 @component("view-product-registration", template, style)
 export class ProductRegistration extends View
 {
+    public get title(): string
+    {
+        return "Cadastro de produtos";
+    }
+
     constructor()
     {
         super();

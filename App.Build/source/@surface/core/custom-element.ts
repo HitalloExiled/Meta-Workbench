@@ -54,8 +54,11 @@ export abstract class CustomElement extends HTMLElement
         this.$preventAttributeChangedCallback = true;
         super.setAttribute(attributeName, value);
     }
-
-    public attachAll<T extends HTMLElement>(selector: string, slotName?: string): Array<T>
+    /** use string selector */
+    public attachAll<T extends HTMLElement>(selector: string, slotName?: string): Array<T>;
+    /** query using regex pattern */
+    public attachAll<T extends HTMLElement>(selector: RegExp, slotName?: string): Array<T>;
+    public attachAll<T extends HTMLElement>(selector: string|RegExp, slotName?: string): Array<T>
     {
         if (this.shadowRoot)
         {
@@ -65,19 +68,34 @@ export abstract class CustomElement extends HTMLElement
             if (slots.length > 0)
             {            
                 return slots.toArray()
-                    .map((slot: HTMLSlotElement) => slot.assignedNodes().filter((x: HTMLElement) => x.localName == selector))
+                    .map
+                    (
+                        (slot: HTMLSlotElement) => slot.assignedNodes()
+                            .filter((x: HTMLElement) => x.nodeType != Node.TEXT_NODE)
+                            .filter
+                            (
+                                (x: HTMLElement) => selector instanceof RegExp ?
+                                    x.tagName.toLowerCase().match(selector) :
+                                    x.tagName.toLowerCase() == selector
+                            )
+                    )
                     .flat() as Array<T>;
             }
+            else if (selector instanceof RegExp)
+                return this.shadowRoot.querySelectorAll("*").toArray().filter(x => x.tagName.toLowerCase().match(selector)) as Array<T>;
             else
                 return this.shadowRoot.querySelectorAll(selector).toArray() as Array<T>;
         }
         else
             throw new Error("Element don't has shadowRoot");
     }
-
-    public attach<T extends HTMLElement>(selector: string, slotName?: string)
+    /** use string selector */
+    public attach<T extends HTMLElement>(selector: string, slotName?: string);
+    /** query using regex pattern */
+    public attach<T extends HTMLElement>(selector: RegExp, slotName?: string);
+    public attach<T extends HTMLElement>(selector: string|RegExp, slotName?: string)
     {
-        return this.attachAll<T>(selector, slotName)[0];
+        return this.attachAll<T>(selector as any, slotName)[0];
     }
 
     /** Called when the element is created or upgraded */

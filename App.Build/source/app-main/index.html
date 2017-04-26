@@ -1,22 +1,19 @@
 <template>
-    <layout-stack orientation="vertical">
-        <h3>Teste</h3>
-        <h3>Teste</h3>
-        <h3>Teste</h3>
-        <h3>Teste</h3>
-        <h3>Teste</h3>
-    </layout-stack>
-    <layout-stack orientation="vertical">
-        <action-menu>
-            <action-menu-item label="Catalogo de Produtos" action="view-product-catalog"></action-menu-item>
-            <action-menu-item label="Cadastro de Produtos" action="view-product-registration"></action-menu-item>
-        </action-menu>
-        <layout-stack orientation="horizontal" style="height:100%">
-            <container style="background-color: yellow"></container>
-            <layout-stack orientation="vertical">
-                <!--<container style="width: 100%; background-color: green"></container>-->
-                <layout-slot-view></layout-slot-view>
-            </layout-stack>
-        </layout-stack>
-    </layout-stack>
+    <grid-area>
+        <menu-area>
+            <action-menu>
+                <action-menu-item label="Catálogo de Produtos" action="view-product-catalog"></action-menu-item>
+                <action-menu-item label="Cadastro de Produtos" action="view-product-registration"></action-menu-item>
+            </action-menu>
+        </menu-area>
+        <side-bar-area>
+            <container style="background-color: darkcyan"></container>
+        </side-bar-area>
+        <content-area>
+            <layout-window></layout-window>
+        </content-area>
+        <footer-area>
+            <container style="background-color: #005970"></container>
+        </footer-area>
+    </grid-area>
 </template>

@@ -1,10 +1,16 @@
 :host
 {
+    display:          flex;
     background-color: lightseagreen;  
     width:            100%;
+    height:           calc(100% - 2px);
+    border-bottom:    solid 2px green;
     text-align:       center;
     color:            white;
-    border-bottom:    solid 2px green;
+    > span
+    {
+        margin: auto;
+    }
 }
 
 :host(:hover)
