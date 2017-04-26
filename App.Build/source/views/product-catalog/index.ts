@@ -11,7 +11,7 @@ export class ProductCatalog extends View
 {
     public get title(): string
     {
-        return "Catálogo de produtos";
+        return "Lista de produtos";
     }
 
     constructor()

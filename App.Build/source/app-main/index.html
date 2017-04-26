@@ -2,18 +2,26 @@
     <grid-area>
         <menu-area>
             <action-menu>
-                <action-menu-item label="Catálogo de Produtos" action="view-product-catalog"></action-menu-item>
+                <action-menu-item label="Lista de Produtos" action="view-product-catalog"></action-menu-item>
                 <action-menu-item label="Cadastro de Produtos" action="view-product-registration"></action-menu-item>
             </action-menu>
         </menu-area>
-        <side-bar-area>
-            <container style="background-color: darkcyan"></container>
+        <side-bar-area style="background-color: darkcyan">
+            <layout-stack stretch margin="5px" style="overflow: auto">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+                <input type="button" style="width: 100px; height: 100px;">
+            </layout-stack>
         </side-bar-area>
         <content-area>
             <layout-window></layout-window>
         </content-area>
-        <footer-area>
-            <container style="background-color: #005970"></container>
+        <footer-area style="background-color: #005970">            
         </footer-area>
     </grid-area>
 </template>

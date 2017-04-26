@@ -15,6 +15,7 @@ import { loadView }      from "codebase/view-loader";
 
 import template from "index.html";
 import style    from "index.scss";
+
 @component("app-main", template, style)
 export class App extends CustomElement
 {

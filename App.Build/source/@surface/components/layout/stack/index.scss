@@ -1,45 +1,100 @@
 ﻿:host
-{
-    width:  100%;
-    height: 100%;
+{    
     display: flex;
     ::slotted(*)
     {
-        //display: flex;
-        //position: absolute;
-        margin: auto;
+        margin:      0;
+        flex-grow:   0;
+        flex-shrink: 0;
     }
 }
 
 :host,
 :host([v]),
 :host([vertical]),
-:host([orientation="vertical"]),
-:host([v])
+:host([orientation="vertical"])
 {
-    width:   100%;
     flex-direction: column;
+    width:  100%;
+    
+    ::slotted(*)
+    {
+        margin: 0 auto 0 auto;
+    }
+
+    
 }
 
 :host([h]),
 :host([horizontal]),
 :host([orientation="horizontal"])
 {
-    height:  100%;
     flex-direction: row;
+    height: 100%;
+    
+    ::slotted(*)
+    {
+        margin: auto 0 auto 0;
+    }   
+
+    
+}
+
+:host([stretch][margin="*"])
+:host([stretch][margin="*"][v])
+:host([stretch][margin="*"][vertical])
+:host([stretch][margin="*"][orientation="vertical"])
+{
+    ::slotted(*)
+    {
+        margin: auto attr(margin) auto attr(margin);
+    }
+}
+
+:host([stretch][margin][h]),
+:host([stretch][margin][horizontal]),
+:host([stretch][margin][orientation="horizontal"])
+{
+    ::slotted(*)
+    {
+        margin: attr(margin) auto attr(margin) auto; 
+    }
 }
 
 :host([reverse])
-:host([v][reverse]),
-:host([vertical][reverse]),
-:host([orientation="vertical"][reverse])
+:host([reverse][v]),
+:host([reverse][vertical]),
+:host([reverse][orientation="vertical"])
 {
     flex-direction: column-reverse;
 }
 
-:host([h][reverse]),
-:host([horizontal][reverse]),
-:host([orientation="horizontal"][reverse])
+:host([reverse][h]),
+:host([reverse][horizontal]),
+:host([reverse][orientation="horizontal"])
 {
     flex-direction: row-reverse;
+}
+
+:host([stretch]),
+:host([stretch][v]),
+:host([stretch][vertical]),
+:host([stretch][orientation="vertical"])
+:host([stretch][h]),
+:host([stretch][horizontal]),
+:host([stretch][orientation="horizontal"])
+:host([stretch][reverse])
+:host([stretch][v][reverse]),
+:host([stretch][vertical][reverse]),
+:host([stretch][orientation="vertical"][reverse]),
+:host([stretch][h][reverse]),
+:host([stretch][horizontal][reverse]),
+:host([stretch][orientation="horizontal"][reverse])
+{
+    width:  100%;
+    height: 100%;
+    ::slotted(*)
+    {
+        margin: auto;
+    }
 }
