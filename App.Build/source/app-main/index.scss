@@ -10,7 +10,7 @@
         display: grid;
         width:  100%;
         height: 100%;
-        grid-template-columns: 200px auto;
+        grid-template-columns: 120px auto;
         grid-template-rows:    30px  auto 50px;
         grid-template-areas:
             "menu-area        menu-area"
@@ -28,9 +28,12 @@
         > side-bar-area { grid-area: side-bar-area }
         > content-area  { grid-area: content-area }
         > footer-area   { grid-area: footer-area }
+
+        animation-name:     show-side-bar;
+        animation-duration: 1s;
     }
 
-    @media (max-width: 800px)
+    @media (max-width: 700px)
     {
         grid-area
         {
@@ -43,7 +46,53 @@
             {
                 display: none;
             }
-        }
 
+            animation-name:     hide-side-bar;
+            animation-duration: 1s;
+        }
+    }
+
+    @keyframes hover-in
+    {
+        from
+        {
+            width:  60px;
+            height: 60px;
+        }
+        to
+        {
+            width:  100px;
+            height: 100px;
+        }
+    }
+
+    @keyframes hover-off
+    {
+        from
+        {
+            width:  100px;
+            height: 100px;
+        }
+        to
+        {
+            width:  60px;
+            height: 60px;
+        }
+    }
+
+    side-bar-area img
+    {
+        width:  60px;
+        height: 60px;
+        animation-name: hover-off;
+        animation-duration: 0.25s;
+    }
+
+    side-bar-area img:hover
+    {
+        width:  100px;
+        height: 100px;
+        animation-name: hover-in;
+        animation-duration: 0.25s;
     }
 }

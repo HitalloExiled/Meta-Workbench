@@ -1,5 +1,5 @@
 ﻿{
-  "extends": "../configs/tsconfig-base.json",
+  "extends": "../../../configs/tsconfig-base.json",
   "compilerOptions":
   {
     "baseUrl": "./",
@@ -9,14 +9,13 @@
       "es2015",
       "es2016"
     ],
-    "module":    "es2015",
+    "module":    "commonjs",
     "noEmit":    true,
     "sourceMap": true,
     "typeRoots":
     [
-      "../node_modules/@types"
+      "../../../node_modules/@types"
     ]
   },
-  "include": ["./"],
-  "exclude": ["./@surface/plugins"]
+  "include": ["./"]
 }

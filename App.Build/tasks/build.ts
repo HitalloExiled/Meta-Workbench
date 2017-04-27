@@ -1,7 +1,7 @@
-import * as Webpack from "webpack";
-import * as Path    from "path";
-import * as Rimraf  from "rimraf";
-import config       from "./webpack-config";
+import Webpack = require("webpack");
+import Path    = require("path");
+import rimraf  = require("rimraf");
+import config  = require("./webpack-config");
 
 const DEV   = "DEV";
 const PROD  = "PROD";
@@ -28,15 +28,13 @@ let isWatching = MODE == WATCH;
 
 let publicPath = Path.resolve(__dirname, "../../App.Server/public");
 
-Rimraf
-(
-    publicPath,
-    () =>
-    {
-        console.log(`Starting ${isWatching ? "Watch" : "build"} using ${ENV == "DEV" ? "development" : "production"} configuration.`);
-        if (isWatching)
-            compiler.watch({aggregateTimeout: 500, poll: true, ignored: /node_modules/ }, callback);
-        else
-            compiler.run(callback);
-    }
-);
+let build = () =>
+{
+    console.log(`Starting ${isWatching ? "Watch" : "build"} using ${ENV == "DEV" ? "development" : "production"} configuration.`);
+    if (isWatching)
+        compiler.watch({aggregateTimeout: 500, poll: true, ignored: /node_modules/ }, callback);
+    else
+        compiler.run(callback);
+}
+
+rimraf(publicPath, build);

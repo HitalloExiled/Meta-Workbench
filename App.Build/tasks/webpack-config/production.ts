@@ -7,7 +7,7 @@ let uglifyOptions =
     sourceMap: true
 } as Webpack.UglifyPluginOptions;
 
-export default
+export =
 {
     plugins: [new Webpack.optimize.UglifyJsPlugin(uglifyOptions)]
 } as Webpack.Configuration;

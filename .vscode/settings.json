@@ -14,11 +14,13 @@
         "**/**/*.js": true,
         "**/**/*.map": true,
         "**/**/*.csproj": true,
+        "**/**/*.njsproj": true,
         "**/**/*.csproj.user": true,
         "**/**/Properties": true,
         "**/**/bin": true,
         "**/**/obj": true,
         "**/**/node_modules": true,
-        "**/packages": true
+        "**/packages": true,
+        "**/Drafts": true
     }
 }

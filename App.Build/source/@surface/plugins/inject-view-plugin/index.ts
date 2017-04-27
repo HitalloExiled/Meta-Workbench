@@ -1,4 +1,4 @@
-export namespace InjectViewPlugin
+namespace InjectViewPlugin
 {
     export interface Options
     {
@@ -8,7 +8,7 @@ export namespace InjectViewPlugin
     }
 }
 
-export class InjectViewPlugin
+class InjectViewPlugin
 {
     private _options: InjectViewPlugin.Options|null;
 
@@ -85,3 +85,5 @@ export class InjectViewPlugin
         );
     };
 }
+
+export = InjectViewPlugin;

@@ -1,12 +1,12 @@
-﻿import * as Webpack from "webpack";
-import * as Path    from "path";
+﻿import Webpack = require("webpack");
+import Path    = require("path");
 
-import devConfig  from "./development";
-import prodConfig from "./production";
+import devConfig  = require("./development");
+import prodConfig = require("./production");
 
-import { InjectViewPlugin } from "../../source/@surface/plugins/inject-view-plugin";
+import InjectViewPlugin = require("../../source/@surface/plugins/inject-view-plugin");
 
-export default (env: string) =>
+export = (env: string) =>
 {
     const DEV          = "DEV";
     const ROOT         = Path.resolve(__dirname, "../../");
