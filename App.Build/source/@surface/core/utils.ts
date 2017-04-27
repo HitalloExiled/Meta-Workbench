@@ -46,7 +46,7 @@ export function parseTextNode(node: Node, context: object): void
             (
                 item =>
                 {
-                    let propertyName = item[2];
+                    let [left, propertyName, right, alternative] = item.slice(1);
 
                     if (propertyName)
                     {
@@ -71,14 +71,7 @@ export function parseTextNode(node: Node, context: object): void
                             );
                         }
                     }
-                    let fragments = () =>
-                    [
-                        () => item[1] || "",
-                        () => context[propertyName] || "",
-                        () => item[3] || "",
-                        () => item[4] || ""
-                    ].map(x => x()).join("");
-                    return fragments;
+                    return () => (left || "") + (context[propertyName] || "") + (right || "") + (alternative || "");
                 }
             );
 

@@ -41,7 +41,7 @@ export default (env: string) =>
             rules:
             [
                 {
-                    test: /\.(png|jpe?g)$/,
+                    test: /\.(png|jpe?g|svg)$/,
                     use:
                     [
                         {
@@ -68,7 +68,6 @@ export default (env: string) =>
                             options:
                             {
                                 attrs: ["img:src", "link:href", "script:src"],
-                                interpolate: "require",
                                 minify: true
                             }
                         }

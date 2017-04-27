@@ -47,20 +47,21 @@ function loadFile(response: HTTP.ServerResponse, path: string): void
             case '.js':
                 contentType = 'text/javascript';
                 break;
+            case '.json':
             case '.map':
                 contentType = 'application/json';
                 break;
             case '.css':
                 contentType = 'text/css';
                 break;
-            case '.json':
-                contentType = 'application/json';
-                break;
             case '.png':
                 contentType = 'image/png';
                 break;      
             case '.jpg':
                 contentType = 'image/jpg';
+                break;
+            case '.svg':
+                contentType = 'image/svg+xml';
                 break;
             case '.wav':
                 contentType = 'audio/wav';

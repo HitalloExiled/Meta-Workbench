@@ -54,9 +54,9 @@ export abstract class CustomElement extends HTMLElement
         this.$preventAttributeChangedCallback = true;
         super.setAttribute(attributeName, value);
     }
-    /** use string selector */
+    /** Query shadow root use string selector and returns all elements */
     public attachAll<T extends HTMLElement>(selector: string, slotName?: string): Array<T>;
-    /** query using regex pattern */
+    /** Query shadow root using regex pattern and returns all elements */
     public attachAll<T extends HTMLElement>(selector: RegExp, slotName?: string): Array<T>;
     public attachAll<T extends HTMLElement>(selector: string|RegExp, slotName?: string): Array<T>
     {
@@ -89,9 +89,9 @@ export abstract class CustomElement extends HTMLElement
         else
             throw new Error("Element don't has shadowRoot");
     }
-    /** use string selector */
+    /** Query shadow root use string selector and returns the first element */
     public attach<T extends HTMLElement>(selector: string, slotName?: string);
-    /** query using regex pattern */
+    /** Query shadow root using regex pattern and returns the first element */
     public attach<T extends HTMLElement>(selector: RegExp, slotName?: string);
     public attach<T extends HTMLElement>(selector: string|RegExp, slotName?: string)
     {

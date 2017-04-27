@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{68629427-cbaf-4f2a-93c5-f5a6fe620379}</ProjectGuid>
+        <ProjectHome />
+        <ProjectView>ShowAllFiles</ProjectView>
+        <StartupFile />
+        <WorkingDirectory>.</WorkingDirectory>
+        <OutputPath>.</OutputPath>
+        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+        <TypeScriptSourceMap>true</TypeScriptSourceMap>
+        <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+        <EnableTypeScript>true</EnableTypeScript>
+        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+    <ItemGroup>
+        <Content Include="package.json" />
+        <Content Include="tslint.json" />
+        <Content Include="configs\tsconfig-base.json" />
+        <Content Include="source\tsconfig.json" />
+        <Content Include="tasks\tsconfig.json" />
+        <TypeScriptCompile Include="tasks\build.ts" />
+        <TypeScriptCompile Include="tasks\clean.ts" />
+        <TypeScriptCompile Include="tasks\language-service.ts" />
+        <Compile Include="tasks\build.js" />
+        <Compile Include="tasks\clean.js" />
+        <Compile Include="tasks\language-service.js" />
+        <Content Include="source\app-main\index.html" />
+        <TypeScriptCompile Include="source\app-main\index.ts" />
+        <TypeScriptCompile Include="source\codebase\view-loader.ts" />
+        <TypeScriptCompile Include="source\dependencies\index.ts" />
+        <Content Include="source\resources\icon.png" />
+        <Content Include="source\resources\icon.jpg" />
+        <Content Include="source\@surface\components\package.json" />
+        <Content Include="source\@surface\core\package.json" />
+        <TypeScriptCompile Include="source\@surface\core\custom-element.ts" />
+        <TypeScriptCompile Include="source\@surface\core\decorators.ts" />
+        <TypeScriptCompile Include="source\@surface\core\utils.ts" />
+        <TypeScriptCompile Include="source\@surface\core\view.ts" />
+        <TypeScriptCompile Include="source\@surface\@types\global\index.d.ts" />
+        <Content Include="source\@surface\components\action\menu\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\action\menu\index.ts" />
+        <Content Include="source\@surface\components\action\menu-item\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\action\menu-item\index.ts" />
+        <Content Include="source\@surface\components\data\column\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\data\column\index.ts" />
+        <Content Include="source\@surface\components\data\grid\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\data\grid\index.ts" />
+        <Content Include="source\@surface\components\data\row\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\data\row\index.ts" />
+        <Content Include="source\@surface\components\layout\stack\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\layout\stack\index.ts" />
+        <Content Include="source\@surface\components\layout\window\index.html" />
+        <TypeScriptCompile Include="source\@surface\components\layout\window\index.ts" />
+        <TypeScriptCompile Include="source\@surface\core\contracts\iview.ts" />
+        <TypeScriptCompile Include="source\@surface\core\extensions\array.ts" />
+        <TypeScriptCompile Include="source\@surface\core\extensions\node-list.ts" />
+        <Content Include="source\@surface\plugins\inject-view-plugin\package.json" />
+        <TypeScriptCompile Include="source\@surface\plugins\inject-view-plugin\index.ts" />
+        <Compile Include="source\@surface\plugins\inject-view-plugin\index.js" />
+        <Content Include="source\views\product-catalog\index.html" />
+        <TypeScriptCompile Include="source\views\product-catalog\index.ts" />
+        <Content Include="source\views\product-registration\index.html" />
+        <TypeScriptCompile Include="source\views\product-registration\index.ts" />
+        <TypeScriptCompile Include="tasks\webpack-config\development.ts" />
+        <TypeScriptCompile Include="tasks\webpack-config\index.ts" />
+        <TypeScriptCompile Include="tasks\webpack-config\production.ts" />
+        <Compile Include="tasks\webpack-config\development.js" />
+        <Compile Include="tasks\webpack-config\index.js" />
+        <Compile Include="tasks\webpack-config\production.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="configs" />
+        <Folder Include="source" />
+        <Folder Include="source\@surface" />
+        <Folder Include="source\@surface\@types" />
+        <Folder Include="source\@surface\@types\global" />
+        <Folder Include="source\@surface\components" />
+        <Folder Include="source\@surface\components\action" />
+        <Folder Include="source\@surface\components\action\menu" />
+        <Folder Include="source\@surface\components\action\menu-item" />
+        <Folder Include="source\@surface\components\data" />
+        <Folder Include="source\@surface\components\data\column" />
+        <Folder Include="source\@surface\components\data\grid" />
+        <Folder Include="source\@surface\components\data\row" />
+        <Folder Include="source\@surface\components\layout" />
+        <Folder Include="source\@surface\components\layout\stack" />
+        <Folder Include="source\@surface\components\layout\window" />
+        <Folder Include="source\@surface\core" />
+        <Folder Include="source\@surface\core\contracts" />
+        <Folder Include="source\@surface\core\extensions" />
+        <Folder Include="source\@surface\plugins" />
+        <Folder Include="source\@surface\plugins\inject-view-plugin" />
+        <Folder Include="source\app-main" />
+        <Folder Include="source\codebase" />
+        <Folder Include="source\dependencies" />
+        <Folder Include="source\resources" />
+        <Folder Include="source\styles" />
+        <Folder Include="source\views" />
+        <Folder Include="source\views\product-catalog" />
+        <Folder Include="source\views\product-registration" />
+        <Folder Include="tasks" />
+        <Folder Include="tasks\webpack-config" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+    <ProjectExtensions>
+        <VisualStudio>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+            <WebProjectProperties>
+              <UseIIS>False</UseIIS>
+              <AutoAssignPort>True</AutoAssignPort>
+              <DevelopmentServerPort>0</DevelopmentServerPort>
+              <DevelopmentServerVPath>/</DevelopmentServerVPath>
+              <IISUrl>http://localhost:48022/</IISUrl>
+              <NTLMAuthentication>False</NTLMAuthentication>
+              <UseCustomServer>True</UseCustomServer>
+              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+            </WebProjectProperties>
+          </FlavorProperties>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+            <WebProjectProperties>
+              <StartPageUrl>
+              </StartPageUrl>
+              <StartAction>CurrentPage</StartAction>
+              <AspNetDebugging>True</AspNetDebugging>
+              <SilverlightDebugging>False</SilverlightDebugging>
+              <NativeDebugging>False</NativeDebugging>
+              <SQLDebugging>False</SQLDebugging>
+              <ExternalProgram>
+              </ExternalProgram>
+              <StartExternalURL>
+              </StartExternalURL>
+              <StartCmdLineArguments>
+              </StartCmdLineArguments>
+              <StartWorkingDirectory>
+              </StartWorkingDirectory>
+              <EnableENC>False</EnableENC>
+              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+            </WebProjectProperties>
+          </FlavorProperties>
+        </VisualStudio>
+    </ProjectExtensions>
+</Project>

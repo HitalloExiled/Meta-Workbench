@@ -19,8 +19,9 @@ import style    from "index.scss";
 @component("app-main", template, style)
 export class App extends CustomElement
 {
-    private _menu:   Menu        = super.attach<Menu>("action-menu");
-    private _window: Window      = super.attach<Window>("layout-window");
+    private _menu:   Menu           = super.attach<Menu>("action-menu");
+    private _window: Window         = super.attach<Window>("layout-window");
+    private _logo:   HTMLDivElement = super.attach<HTMLDivElement>("#logo");
     private _views:  Array<View> = [];
 
     public constructor()
@@ -33,6 +34,7 @@ export class App extends CustomElement
     {
         let eventBind = async (item: MenuItem) =>
         {
+            this._logo.style.display = "none";
             let view = this._views.filter(x => x.localName == item.action)[0];
             
             if (!view)
