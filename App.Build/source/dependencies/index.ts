@@ -1,3 +1,2 @@
-﻿//import "webcomponents.js/webcomponents-lite";
-//import "document-register-element";
+﻿import "webcomponents.js/webcomponents-lite";
 import "reflect-metadata";

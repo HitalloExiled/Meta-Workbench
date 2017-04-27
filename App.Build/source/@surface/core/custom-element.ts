@@ -1,5 +1,4 @@
-﻿import "@surface/core/extensions/array";
-import "@surface/core/extensions/node-list";
+﻿import "@surface/core/extensions";
 
 import { traverseElement, parseTextNode } from '@surface/core/utils';
 export abstract class CustomElement extends HTMLElement

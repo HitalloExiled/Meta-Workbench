@@ -2,14 +2,14 @@
   "name": "workbench",
   "version": "0.0.0",
   "description": "Workbench",
-  "main": "app.js",
+  "main": "task/build.js",
   "author": {
     "name": "HitalloExiled"
   },
   "devDependencies": {
     "@types/glob": "^5.0.30",
     "@types/html-webpack-plugin": "^2.22.4",
-    "@types/node": "^7.0.12",
+    "@types/node": "^7.0.14",
     "@types/reflect-metadata": "0.0.5",
     "@types/rimraf": "0.0.28",
     "@types/webpack": "^2.2.14",
@@ -33,14 +33,14 @@
     "to-string-loader": "^1.1.5",
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
-    "typescript": "^2.3.0",
+    "typescript": "^2.3.1",
     "url-loader": "^0.5.8",
-    "webcomponents.js": "^0.7.24",
     "webpack": "^2.3.3",
     "xregexp": "^3.1.1"
   },
   "dependencies": {
-    "tslib": "^1.6.0"
+    "tslib": "^1.6.0",
+    "webcomponents.js": "git+https://github.com/webcomponents/webcomponentsjs"
   },
   "scripts": {
     "task:build:dev": "ts-node --project ./tasks ./tasks/build.ts --dev",
