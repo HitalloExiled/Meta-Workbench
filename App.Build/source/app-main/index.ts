@@ -43,8 +43,11 @@ export class App extends CustomElement
                 view = new ViewConstructor();
                 this._views.push(view);
             }
-
+            else if (this._window.view && Object.is(this._window.view, view))
+                return;
+                
             this._window.view = view;
+                
             view.show();
         }
 

@@ -23,12 +23,10 @@ export class Window extends CustomElement
     private _view:  Nullable<View>;    
     public get view(): Nullable<View>
     {
-        if (this.shadowRoot)
-        {
+        if (this.shadowRoot && !this._view)
             this._view = super.attach<View>(/^view-/);
-            return this.view;
-        }
-        return null;
+            
+        return this._view;
     }
 
     public set view(value: Nullable<View>)

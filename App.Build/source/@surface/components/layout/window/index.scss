@@ -53,6 +53,10 @@
                 text-align: center;
             }
         }
-        > content-area { grid-area: content-area; }
+        > content-area
+        {
+            grid-area:  content-area;
+            margin-top: 10px;
+        }
     }
 }
