@@ -1,0 +1,9 @@
+{
+  "name": "type-script.linq",
+  "version": "0.0.0",
+  "description": "TypeScript.Linq",
+  "main": "app.js",
+  "author": {
+    "name": "HitalloExiled"
+  }
+}

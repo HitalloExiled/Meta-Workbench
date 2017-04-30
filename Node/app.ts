@@ -1,4 +1,12 @@
-﻿export abstract class Enumerable<TSource> implements Iterable<TSource>
+﻿type Func<TResult>          = () => TResult;
+type Func1<T1, TResult>     = (arg: T1) => TResult;
+type Func2<T1, T2, TResult> = (arg1: T1, arg2: T2) => TResult;
+
+type Action             = () => void;
+type Action1<T1>        = (arg: T1) => void;
+type Action2<T1, T2>    = (arg1: T1, arg2: T2) => void;
+
+abstract class Enumerable<TSource> implements Iterable<TSource>
 {
     public abstract [Symbol.iterator]: () => Iterator<any>;
 
@@ -14,7 +22,7 @@
         return new SelectIterator<TSource, TResult>(this, selector);
     }
 
-    public firstOrDefault(): Nullable<TSource>
+    public firstOrDefault(): TSource|null
     {
         return this[Symbol.iterator]().next().value;
     }
@@ -55,7 +63,7 @@
     }
 }
 
-export class WhereIterator<TSource> extends Enumerable<TSource>
+class WhereIterator<TSource> extends Enumerable<TSource>
 {
     public [Symbol.iterator]: () => Iterator<TSource>;
     public constructor(source: Iterable<TSource>, predicate: Func1<TSource, boolean>)
@@ -72,7 +80,7 @@ export class WhereIterator<TSource> extends Enumerable<TSource>
     }
 }
 
-export class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
+class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
 {
     public [Symbol.iterator]: () => Iterator<TSource>;
     public constructor(source: Iterable<TSource>, defaultValue: TSource)
@@ -93,7 +101,7 @@ export class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
     }
 }
 
-export class SelectIterator<TSource, TResult> extends Enumerable<TResult>
+class SelectIterator<TSource, TResult> extends Enumerable<TResult>
 {
     public [Symbol.iterator]: () => Iterator<TResult>;
 
@@ -108,3 +116,44 @@ export class SelectIterator<TSource, TResult> extends Enumerable<TResult>
         }
     }
 }
+
+interface Array<T> extends Enumerable<T>
+{ }
+
+Array.prototype.select = function <T, TResult>(this: Array<T>, selector: Func1<T, TResult>)
+{
+    return new SelectIterator(this, selector);
+}
+
+Array.prototype.where = function <T, TResult>(this: Array<T>, predicate: Func1<T, boolean>)
+{
+    return new WhereIterator(this, predicate);
+}
+
+Array.prototype.defaultIfEmpty = function <T>(this: Array<T>, defaultValue: T)
+{
+    return new DefaultIfEmptyIterator(this, defaultValue)
+}
+
+Array.prototype.firstOrDefault = function <T>(this: Array<T>)
+{
+    return this[Symbol.iterator]().next().value;
+}
+
+let values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .where(x => x > 5)
+    //.select(x => `value of x is ${x}`)
+    //.defaultIfEmpty("Foo")
+    .toArray();
+
+console.log(values);
+
+let values2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    .where(x => x > 5)
+    .select((x, i) => `value of x is ${x}, index is ${i}`)
+    .defaultIfEmpty("Foo");
+
+console.log(values2);
+
+for (let item of values2)
+    console.log(item);

@@ -1,0 +1,14 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions":
+  {
+    "lib":
+    [
+      "dom",
+      "es2015",
+      "es2016"
+    ],
+    "target": "esnext",
+    "sourceMap": true
+  }
+}
