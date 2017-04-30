@@ -33,6 +33,8 @@
     <Content Include="configs\tsconfig-base.json" />
     <Content Include="source\tsconfig.json" />
     <Content Include="tasks\tsconfig.json" />
+    <TypeScriptCompile Include="source\%40surface\core\enumerable\index.ts" />
+    <TypeScriptCompile Include="source\%40surface\core\extensions.ts" />
     <TypeScriptCompile Include="tasks\build.ts" />
     <TypeScriptCompile Include="tasks\clean.ts" />
     <TypeScriptCompile Include="tasks\language-service.ts" />
@@ -65,9 +67,6 @@
     <TypeScriptCompile Include="source\@surface\components\layout\stack\index.ts" />
     <Content Include="source\@surface\components\layout\window\index.html" />
     <TypeScriptCompile Include="source\@surface\components\layout\window\index.ts" />
-    <TypeScriptCompile Include="source\@surface\core\contracts\iview.ts" />
-    <TypeScriptCompile Include="source\@surface\core\extensions\array.ts" />
-    <TypeScriptCompile Include="source\@surface\core\extensions\node-list.ts" />
     <TypeScriptCompile Include="source\@surface\plugins\inject-view-plugin\index.ts" />
     <Content Include="source\views\product-catalog\index.html" />
     <TypeScriptCompile Include="source\views\product-catalog\index.ts" />
@@ -83,6 +82,7 @@
   <ItemGroup>
     <Folder Include="configs" />
     <Folder Include="source" />
+    <Folder Include="source\%40surface\core\enumerable\" />
     <Folder Include="source\@surface" />
     <Folder Include="source\@surface\@types" />
     <Folder Include="source\@surface\@types\global" />
@@ -98,8 +98,6 @@
     <Folder Include="source\@surface\components\layout\stack" />
     <Folder Include="source\@surface\components\layout\window" />
     <Folder Include="source\@surface\core" />
-    <Folder Include="source\@surface\core\contracts" />
-    <Folder Include="source\@surface\core\extensions" />
     <Folder Include="source\@surface\plugins" />
     <Folder Include="source\@surface\plugins\inject-view-plugin" />
     <Folder Include="source\app-main" />
