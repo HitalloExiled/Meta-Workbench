@@ -6,18 +6,9 @@
     [
         {
             "taskName":       "ts-build",
-            "command":        "cmd",            
+            "command":        "cmd",
             "isShellCommand": true,
-            "args":           ["/c", ".\\App.Build\\node_modules\\.bin\\tsc -p ./App.Build/tasks & .\\App.Build\\node_modules\\.bin\\tsc -p ./App.Server/start"],
-            "showOutput":     "always",
-            "isBackground":   true,
-            "problemMatcher": "$tsc-watch"
-        },
-        {
-            "taskName":       "build-all",
-            "command":        "cmd",            
-            "isShellCommand": true,
-            "args":           ["/c", ".\\App.Build\\node_modules\\.bin\\tsc -p ./App.Server/start && .\\App.Build\\node_modules\\.bin\\tsc -p ./App.Build/tasks && node ./App.Build/tasks/build.js --dev"],
+            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\tsc -p ./App.Client/tasks & .\\App.Client\\node_modules\\.bin\\tsc -p ./App.Server/start"],
             "showOutput":     "always",
             "isBackground":   true,
             "problemMatcher": "$tsc-watch"
@@ -26,16 +17,16 @@
             "taskName":       "build",
             "command":        "cmd",
             "isShellCommand": true,
-            "args":           ["/c", ".\\App.Build\\node_modules\\.bin\\tsc -p ./App.Build/tasks && node ./App.Build/tasks/build.js --dev"],
+            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\tsc -p ./App.Server/start && .\\App.Client\\node_modules\\.bin\\tsc -p ./App.Client/tasks && node ./App.Client/tasks/build.js --dev"],
             "showOutput":     "always",
             "isBackground":   true,
             "problemMatcher": "$tsc-watch"
         },
         {
             "taskName":       "watch",
-            "command":        "cmd",            
+            "command":        "cmd",
             "isShellCommand": true,
-            "args":           ["/c", ".\\App.Build\\node_modules\\.bin\\ts-node --project ./App.Build/tasks ./App.Build/tasks/build.ts --dev --watch"],
+            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\ts-node --project ./App.Client/tasks ./App.Client/tasks/build.ts --dev --watch"],
             "showOutput":     "always",
             "isBackground":   true,
             "problemMatcher": "$tsc-watch"

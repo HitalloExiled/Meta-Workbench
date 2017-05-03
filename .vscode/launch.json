@@ -13,9 +13,9 @@
         {
             "type":          "node",
             "request":       "launch",
-            "name":          "Launch Build",
-            "program":       "${workspaceRoot}\\App.Build\\tasks\\build.js",
-            "cwd":           "${workspaceRoot}\\App.Build",
+            "name":          "Launch Client",
+            "program":       "${workspaceRoot}\\App.Client\\tasks\\build.js",
+            "cwd":           "${workspaceRoot}\\App.Client",
             "outFiles": []
         },
         {
