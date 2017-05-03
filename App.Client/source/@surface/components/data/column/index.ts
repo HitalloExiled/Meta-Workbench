@@ -6,25 +6,16 @@ import template from "index.html";
 @component("data-column", template)
 export class Column extends CustomElement
 {
-    public static get observedAttributes(): Array<string>
+    public get content(): HTMLElement
     {
-        return [];
-    }
+        return this.attachAll("*").asEnumerable()
+            .cast<HTMLSlotElement>()
+            .where(x => true)
+            .first();
+    }  
 
     public constructor()
     {
         super();
     }
-
-    public connectedCallback()
-    { }
-
-    public disconnectedCallback()
-    { }
-
-    public attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string)
-    { }
-
-    public adoptedCallback(oldDocument: Document, newDocument: Document)
-    { }
 }

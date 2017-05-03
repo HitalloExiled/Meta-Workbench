@@ -66,22 +66,31 @@ export abstract class CustomElement extends HTMLElement
 
             if (slots.length > 0)
             {            
-                return slots.toArray()
-                    .map
+                return slots.asEnumerable()
+                    .cast<HTMLSlotElement>()
+                    .select
                     (
-                        (slot: HTMLSlotElement) => slot.assignedNodes()
-                            .filter((x: HTMLElement) => x.nodeType != Node.TEXT_NODE)
-                            .filter
+                        slot => slot.assignedNodes()
+                            .asEnumerable()
+                            .cast<HTMLElement>()
+                            .where(x => x.nodeType != Node.TEXT_NODE)
+                            .where
                             (
-                                (x: HTMLElement) => selector instanceof RegExp ?
-                                    x.tagName.toLowerCase().match(selector) :
+                                x => selector instanceof RegExp ?
+                                    !!x.tagName.toLowerCase().match(selector) :
                                     x.tagName.toLowerCase() == selector
                             )
+                            .toArray()
                     )
-                    .flat() as Array<T>;
+                    .toArray()
+                    .flatten() as Array<T>;
             }
             else if (selector instanceof RegExp)
-                return this.shadowRoot.querySelectorAll("*").toArray().filter(x => x.tagName.toLowerCase().match(selector)) as Array<T>;
+                return this.shadowRoot.querySelectorAll("*")
+                    .asEnumerable()
+                    .cast<HTMLElement>()
+                    .where(element => !!element.tagName.toLowerCase().match(selector))
+                    .toArray() as Array<T>;
             else
                 return this.shadowRoot.querySelectorAll(selector).toArray() as Array<T>;
         }
