@@ -8,15 +8,14 @@
   },
   "devDependencies": {
     "@types/glob": "^5.0.30",
-    "@types/node": "^7.0.14",
+    "@types/node": "^7.0.15",
     "@types/xregexp": "^3.0.28",
     "glob": "^7.1.1",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.1",
     "rimraf-glob": "0.0.1-security",
     "ts-loader": "^2.0.3",
-    "ts-node": "^3.0.2",
-    "xregexp": "^3.1.1"
+    "ts-node": "^3.0.2"
   },
   "dependencies": { },
   "scripts": { }
