@@ -18,6 +18,7 @@ export class Stack extends CustomElement
     @metadata
     public get orientation(): Stack.Orientation
     {
+        this._orientation
         return this._orientation;
     }
 

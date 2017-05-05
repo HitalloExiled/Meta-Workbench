@@ -15,9 +15,7 @@ abstract class Enumerable<TSource> implements Iterable<TSource>
         return new WhereIterator(this, predicate);
     }
 
-    public select<TResult>(selector: Func1<TSource, TResult>): Enumerable<TResult>;
-    public select<TResult>(selector: Func2<TSource, number, TResult>): Enumerable<TResult>;
-    public select<TResult>(selector: any): Enumerable<TResult>
+    public select<TResult>(selector: Func2<TSource, number, TResult>): Enumerable<TResult>
     {
         return new SelectIterator<TSource, TResult>(this, selector);
     }
@@ -46,9 +44,7 @@ abstract class Enumerable<TSource> implements Iterable<TSource>
 
         return values;
     }
-
-    public forEach(action: Action1<TSource>);
-    public forEach(action: Action2<TSource, number>);
+    
     public forEach(action: Action2<TSource, number>)
     {
         let index = 0;

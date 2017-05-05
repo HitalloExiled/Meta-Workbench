@@ -18,18 +18,12 @@
     {
         return new WhereIterator(this, predicate);
     }
-
-    /**
-     * Select the enumeration result using the specified selector
-     * @param selector Selector used to returns the result
-     */
-    public select<TResult>(selector: Func1<TSource, TResult>): Enumerable<TResult>;
+    
     /**
      * Select the enumeration result using the specified selector
      * @param selector Selector used to returns the result, provides a second argument with the index of the iteration
      */
-    public select<TResult>(selector: Func2<TSource, number, TResult>): Enumerable<TResult>;
-    public select<TResult>(selector: any): Enumerable<TResult>
+    public select<TResult>(selector: Func2<TSource, number, TResult>): Enumerable<TResult>
     {
         return new SelectIterator<TSource, TResult>(this, selector);
     }
@@ -80,17 +74,11 @@
     {
         return new List(this.toArray());
     }
-
-    /**
-     * Iterates the enumeration by executing the specified action
-     * @param action Action to be executed
-     */
-    public forEach(action: Action1<TSource>);
+    
     /**
      * Iterates the enumeration by executing the specified action
      * @param action Action to be executed, provides a second argument with the index of the iteration
      */
-    public forEach(action: Action2<TSource, number>);
     public forEach(action: Action2<TSource, number>)
     {
         let index = 0;

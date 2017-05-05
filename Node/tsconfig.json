@@ -2,6 +2,8 @@
   "compileOnSave": true,
   "compilerOptions":
   {
+    "allowJs": true,
+    "checkJs": true,
     "lib":
     [
       "dom",
@@ -9,6 +11,7 @@
       "es2016"
     ],
     "target": "esnext",
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": [ "node_modules/@types" ]
   }
 }

@@ -8,7 +8,7 @@ export class Column extends CustomElement
 {
     public get content(): HTMLElement
     {
-        return this.attachAll("*").asEnumerable()
+        return this.attachAll("*")
             .cast<HTMLSlotElement>()
             .where(x => true)
             .first();

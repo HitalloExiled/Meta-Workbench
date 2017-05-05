@@ -1,6 +1,8 @@
 ﻿import "@surface/core/extensions";
 
 import { traverseElement, parseTextNode } from '@surface/core/utils';
+import { List }                           from "@surface/core/enumerable";
+
 export abstract class CustomElement extends HTMLElement
 {
     private _template: Nullable<HTMLTemplateElement>;
@@ -53,11 +55,12 @@ export abstract class CustomElement extends HTMLElement
         this.$preventAttributeChangedCallback = true;
         super.setAttribute(attributeName, value);
     }
+
     /** Query shadow root use string selector and returns all elements */
-    public attachAll<T extends HTMLElement>(selector: string, slotName?: string): Array<T>;
+    public attachAll<T extends HTMLElement>(selector: string, slotName?: string): List<T>;
     /** Query shadow root using regex pattern and returns all elements */
-    public attachAll<T extends HTMLElement>(selector: RegExp, slotName?: string): Array<T>;
-    public attachAll<T extends HTMLElement>(selector: string|RegExp, slotName?: string): Array<T>
+    public attachAll<T extends HTMLElement>(selector: RegExp, slotName?: string): List<T>;
+    public attachAll<T extends HTMLElement>(selector: string|RegExp, slotName?: string): List<T>
     {
         if (this.shadowRoot)
         {
@@ -83,16 +86,17 @@ export abstract class CustomElement extends HTMLElement
                             .toArray()
                     )
                     .toArray()
-                    .flatten() as Array<T>;
+                    .flatten()
+                    .toList() as List<T>;
             }
             else if (selector instanceof RegExp)
                 return this.shadowRoot.querySelectorAll("*")
                     .asEnumerable()
                     .cast<HTMLElement>()
                     .where(element => !!element.tagName.toLowerCase().match(selector))
-                    .toArray() as Array<T>;
+                    .toList() as List<T>;
             else
-                return this.shadowRoot.querySelectorAll(selector).toArray() as Array<T>;
+                return this.shadowRoot.querySelectorAll(selector).toList() as List<T>;
         }
         else
             throw new Error("Element don't has shadowRoot");
@@ -103,7 +107,7 @@ export abstract class CustomElement extends HTMLElement
     public attach<T extends HTMLElement>(selector: RegExp, slotName?: string);
     public attach<T extends HTMLElement>(selector: string|RegExp, slotName?: string)
     {
-        return this.attachAll<T>(selector as any, slotName)[0];
+        return this.attachAll<T>(selector as any, slotName).first();
     }
 
     /** Called when the element is created or upgraded */

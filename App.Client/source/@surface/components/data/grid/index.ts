@@ -10,7 +10,7 @@ import template   from "index.html";
 export class Grid extends CustomElement
 {
     private _rows:     List<Row>;
-    private _headers:  Array<Column> = super.attachAll<Column>("data-column");
+    private _headers:  List<Column> = super.attachAll<Column>("data-column");
     
     private _source: Iterable<Object>;
     public get source(): Iterable<Object>

@@ -23,6 +23,16 @@
             "problemMatcher": "$tsc-watch"
         },
         {
+            "taskName":       "build-server",
+            "command":        "cmd",
+            "isShellCommand": true,
+            "isBuildCommand": true,
+            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\tsc -p ./App.Server/start"],
+            "showOutput":     "always",
+            "isBackground":   false,
+            "problemMatcher": "$tsc-watch"
+        },
+        {
             "taskName":       "watch",
             "command":        "cmd",
             "isShellCommand": true,

@@ -17,9 +17,12 @@ HTTP.createServer
             {
                 Utils.loadFile(response, Path.join(DEFAULT, "index.html"));
             }
-            else if (/^\/[^\/]+$/.test(request.url || ""))
+            else if (request.url && /^\/[^\/]+$/.test(request.url))
             {
-                Utils.loadFile(response, Path.join(DEFAULT, request.url || ""));
+                if (request.url.indexOf(".") > 0) 
+                    Utils.loadFile(response, Path.join(DEFAULT, request.url || ""));
+                else
+                    Utils.loadFile(response, Path.join(DEFAULT, "index.html"));
             }
             else if (request.url)
             {

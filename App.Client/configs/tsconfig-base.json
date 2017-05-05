@@ -2,7 +2,9 @@
   "compilerOptions":
   {
     "allowSyntheticDefaultImports":   true,
+    "allowJs":                        true,       
     "alwaysStrict":                   true,
+    "checkJs":                        true,
     "emitDecoratorMetadata":          true,
     "experimentalDecorators":         true,
     "importHelpers":                  true, 

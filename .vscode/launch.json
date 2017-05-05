@@ -7,8 +7,7 @@
             "request": "launch",
             "name":    "Launch Server",
             "program": "${workspaceRoot}\\App.Server\\start\\index.js",
-            "cwd":     "${workspaceRoot}\\App.Server",
-            "outFiles": []
+            "cwd":     "${workspaceRoot}\\App.Server"
         },
         {
             "type":          "node",
