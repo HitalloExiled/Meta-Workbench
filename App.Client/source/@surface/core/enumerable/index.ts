@@ -28,6 +28,25 @@
         return new SelectIterator<TSource, TResult>(this, selector);
     }
 
+    /**
+     * 
+     * @param iterableSelector 
+     */
+    public selectMany<TResult>(iterableSelector: Func1<TSource, Iterable<TResult>>): Enumerable<TResult>;
+    /**
+     * 
+     * @param iterableSelector 
+     * @param selector 
+     */
+    public selectMany<TCollection, TResult>(iterableSelector: Func1<TSource, Iterable<TCollection>>, selector: Func2<TCollection, number, TResult>): Enumerable<TResult>;
+    public selectMany<TCollection, TResult>(iterableSelector: Func1<TSource, Iterable<TCollection>>, selector?: Func2<TCollection, number, TResult>): Enumerable<TResult>
+    {
+        if (!selector)
+            selector = x => x as any;
+
+        return new SelectManyIterator(this, iterableSelector, selector);
+    }
+
     /** Return the first item of the enumeration or null */
     public firstOrDefault(): Nullable<TSource>
     {
@@ -68,12 +87,6 @@
 
         return values;
     }
-
-    /** Casts the Enumerable into List */
-    public toList(): List<TSource>
-    {
-        return new List(this.toArray());
-    }
     
     /**
      * Iterates the enumeration by executing the specified action
@@ -82,12 +95,9 @@
     public forEach(action: Action2<TSource, number>)
     {
         let index = 0;
-        let iterator = this[Symbol.iterator]();
-        let iteration = iterator.next();
-        while (!iteration.done)
+        for (const item of this)
         {
-            action(iteration.value, index);
-            iteration = iterator.next();
+            action(item, index);
             index++;
         }
     }
@@ -99,7 +109,7 @@
     }
 }
 
-export class EnumerableIterator<TSource> extends Enumerable<TSource>
+class EnumerableIterator<TSource> extends Enumerable<TSource>
 {
     public [Symbol.iterator]: () => Iterator<TSource>;
 
@@ -108,7 +118,7 @@ export class EnumerableIterator<TSource> extends Enumerable<TSource>
         super();
         this[Symbol.iterator] = function*()
         {
-            for (let item of source)
+            for (const item of source)
             {
                 yield item;
             }
@@ -116,7 +126,7 @@ export class EnumerableIterator<TSource> extends Enumerable<TSource>
     }
 }
 
-export class WhereIterator<TSource> extends Enumerable<TSource>
+class WhereIterator<TSource> extends Enumerable<TSource>
 {
     public [Symbol.iterator]: () => Iterator<TSource>;
 
@@ -125,7 +135,7 @@ export class WhereIterator<TSource> extends Enumerable<TSource>
         super();
         this[Symbol.iterator] = function*()
         {
-            for (let item of source)
+            for (const item of source)
             {
                 if (predicate(item))
                     yield item;
@@ -134,7 +144,7 @@ export class WhereIterator<TSource> extends Enumerable<TSource>
     }
 }
 
-export class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
+class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
 {
     public [Symbol.iterator]: () => Iterator<TSource>;
 
@@ -144,7 +154,7 @@ export class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
         this[Symbol.iterator] = function*()
         {
             let index = 0;
-            for (let item of source)
+            for (const item of source)
             {
                 index++;
                 yield item;
@@ -156,7 +166,7 @@ export class DefaultIfEmptyIterator<TSource> extends Enumerable<TSource>
     }
 }
 
-export class SelectIterator<TSource, TResult> extends Enumerable<TResult>
+class SelectIterator<TSource, TResult> extends Enumerable<TResult>
 {
     public [Symbol.iterator]: () => Iterator<TResult>;
 
@@ -166,119 +176,30 @@ export class SelectIterator<TSource, TResult> extends Enumerable<TResult>
         this[Symbol.iterator] = function* ()
         {
             let index = 0;
-            for (let item of source)
+            for (const item of source)
                 yield selector(item, index++);
         }
     }
 }
 
-export class List<TSource> extends Enumerable<TSource>
+class SelectManyIterator<TSource, TCollection, TResult> extends Enumerable<TResult>
 {
-    public [Symbol.iterator]: () => Iterator<TSource>;
-    
-    private _source: Array<TSource>;
-    
-    /** Returns Length of the list */
-    public get count(): number
-    {
-        return this._source.length;
-    }
-    
-    public constructor();
-    /**
-     * @param source Source used to create the list
-     */
-    public constructor(source: Array<TSource>);
-    public constructor(source?: Array<TSource>)
+    public [Symbol.iterator]: () => Iterator<TCollection|TResult>;
+
+    public constructor(source: Iterable<TSource>, iterableSelector: Func1<TSource, Iterable<TCollection>>, selector: Func2<TCollection, number, TResult>)
     {
         super();
-        this._source = source || [];
-        let self = this;
-
         this[Symbol.iterator] = function* ()
         {
-            for (let item of self._source)
-                yield item;
+            let index = 0;
+            for (const item of source)
+            {
+                for (const iteration of iterableSelector(item))
+                {
+                    yield selector(iteration, index);
+                    index++;
+                }
+            }
         }
-    }
-
-    /**
-     * Adds provided item to the list
-     * @param item Item to insert
-     */
-    public add(item: TSource): void
-    {
-        this._source.push[0];
-    }
-
-    /**
-     * Adds to the list the provided item at specified index
-     * @param item 
-     * @param index 
-     */
-    public addAt(item: TSource, index): void;
-    public addAt(items: Array<TSource>, index): void;
-    public addAt(items: List<TSource>, index): void;
-    public addAt(itemOrItems: TSource|List<TSource>|Array<TSource>, index): void
-    {        
-        let left = this._source.splice(index + 1)
-        if (Array.isArray(itemOrItems))
-        {
-            let items = itemOrItems;
-            this._source = this._source.concat(items).concat(left);
-        }
-        else if (itemOrItems instanceof List)
-        {
-            let items = itemOrItems.toArray();
-            this._source = this._source.concat(items).concat(left);
-        }
-        else
-        {
-            let item = itemOrItems;
-            this._source = this._source.concat([item]).concat(left);
-        }
-    }
-
-    /**
-     * Removes from the list the specified item
-     * @param item Item to remove
-     */
-    public remove(item: TSource): void;
-    /**
-     * Removes from the list the item in the specified index
-     * @param index Position from item to remove
-     */
-    public remove(index: number): void;
-    /**
-     * Removes from the list the amount of items specified from the index
-     * @param index Position from item to remove
-     * @param count Quantity of items to remove
-     */
-    public remove(index: number, count: number): void;
-    public remove(indexOritem: number|TSource, count?: number): void
-    {
-        let index: number            = 0;
-        let item:  Nullable<TSource> = null;
-        
-        if (typeof indexOritem == "number")
-        {
-            index = indexOritem;
-            this._source.splice(index, count || 1)
-        }
-        else
-        {
-            item = indexOritem;
-            index = this._source.findIndex(x => Object.is(x, item));
-            this._source.splice(index, 1)
-        }
-    }
-
-    /**
-     * Returns the item at the specified index
-     * @param index Position of the item
-     */
-    public item(index: number): TSource
-    {
-        return this._source[index];
     }
 }

@@ -1,7 +1,7 @@
 ﻿import "@surface/core/extensions";
 
-import { traverseElement, parseTextNode } from '@surface/core/utils';
-import { List }                           from "@surface/core/enumerable";
+import { traverseElement, parseTextNode } from "@surface/core/utils";
+import { List }                           from "@surface/core/enumerable/list";
 
 export abstract class CustomElement extends HTMLElement
 {
@@ -68,7 +68,7 @@ export abstract class CustomElement extends HTMLElement
                 .querySelectorAll(slotName ? `slot[name="${slotName}"]` : "slot");
 
             if (slots.length > 0)
-            {            
+            {
                 return slots.asEnumerable()
                     .cast<HTMLSlotElement>()
                     .select
@@ -85,8 +85,7 @@ export abstract class CustomElement extends HTMLElement
                             )
                             .toArray()
                     )
-                    .toArray()
-                    .flatten()
+                    .selectMany(x => x)
                     .toList() as List<T>;
             }
             else if (selector instanceof RegExp)

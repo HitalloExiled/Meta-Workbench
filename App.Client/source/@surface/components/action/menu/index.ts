@@ -3,7 +3,7 @@ import { MenuItem } from "@surface/components/action/menu-item";
 
 import { CustomElement } from "@surface/core/custom-element";
 import { component }     from "@surface/core/decorators";
-import { List }          from "@surface/core/enumerable";
+import { List }          from "@surface/core/enumerable/list";
 
 import template from "index.html";
 import style    from "index.scss";

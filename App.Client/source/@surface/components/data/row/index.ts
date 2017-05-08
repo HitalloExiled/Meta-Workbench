@@ -1,6 +1,6 @@
 import { CustomElement } from "@surface/core/custom-element";
 import { component }     from "@surface/core/decorators";
-import { List }          from "@surface/core/enumerable";
+import { List }          from "@surface/core/enumerable/list";
 import { Column }        from "@surface/components/data/column";
 
 import template from "index.html";

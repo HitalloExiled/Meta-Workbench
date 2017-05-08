@@ -1,15 +1,16 @@
-import * as Enumerables from "@surface/core/enumerable";
+import { Enumerable } from "@surface/core/enumerable";
+import { List }       from "@surface/core/enumerable/list";
 
 declare global
 {
     interface Array<T>
     {
         /** Flatten multidimensional arrays */
-        flatten(this:      Array<T>): T;
+        flatten(this: Array<T>): Array<Object>;
         /** Cast Array<T> into Enumerable<T> */
-        asEnumerable(): Enumerables.Enumerable<T>;
+        asEnumerable(): Enumerable<T>;
         /** Cast Array<T> into List<T> */
-        toList(): Enumerables.List<T>;
+        toList(): List<T>;
     }
 
     interface NodeList
@@ -17,15 +18,15 @@ declare global
         /** Casts NodeList into Array<Node> */
         toArray(): Array<Node>;
         /** Cast NodeList into Enumerable<Node> */
-        asEnumerable(): Enumerables.Enumerable<Node>;
+        asEnumerable(): Enumerable<Node>;
         /** Cast NodeList into List<Node> */
-        toList(): Enumerables.List<Node>;
-    }    
+        toList(): List<Node>;
+    }
 }
 
 Array.prototype.flatten = function<T>(this: Array<T>)
 {
-    let items: Array<T> = [];
+    let items: Array<Object> = [];
 
     for (const item of this)
     {
@@ -40,12 +41,12 @@ Array.prototype.flatten = function<T>(this: Array<T>)
 
 Array.prototype.asEnumerable = function <T>(this: Array<T>)
 {
-    return new Enumerables.EnumerableIterator(this);
+    return Enumerable.from(this);
 }
 
 Array.prototype.toList = function <T>(this: Array<T>)
 {
-    return new Enumerables.List(this);
+    return new List(this);
 }
 
 NodeList.prototype.toArray = function <T extends Node>(this: NodeListOf<T>)
@@ -61,4 +62,18 @@ NodeList.prototype.asEnumerable = function <T extends Node>(this: NodeListOf<T>)
 NodeList.prototype.toList = function <T extends Node>(this: NodeListOf<T>)
 {
     return Array.from(this).toList();
+}
+
+declare module "@surface/core/enumerable"
+{
+    interface Enumerable<TSource>
+    {
+        /** Casts Enumerable<T> to List<T> */
+        toList(): List<TSource>;
+    }
+}
+
+Enumerable.prototype.toList = function<T>(this: Enumerable<T>)
+{
+    return new List(this.toArray());
 }

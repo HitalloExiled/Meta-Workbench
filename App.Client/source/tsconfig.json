@@ -14,9 +14,9 @@
     "sourceMap": true,
     "typeRoots":
     [
+      "./@surface/@types",
       "../node_modules/@types"
     ]
   },
-  "include": ["./"],
-  "exclude": ["./@surface/plugins"]
+  "include": ["./app-main", "./views"]
 }
