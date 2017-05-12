@@ -7,14 +7,14 @@ export class List<TSource> extends Enumerable<TSource>
     private _source: Array<TSource>;
     
     /** Returns Length of the list */
-    public get count(): number
+    public get length(): number
     {
         return this._source.length;
     }
     
     public constructor();
     /**
-     * @param source Source used to create the list
+     * @param source Array<TSource> used to create the list
      */
     public constructor(source: Array<TSource>);
     public constructor(source?: Array<TSource>)
@@ -41,11 +41,21 @@ export class List<TSource> extends Enumerable<TSource>
 
     /**
      * Adds to the list the provided item at specified index
-     * @param item 
-     * @param index 
+     * @param item Item to insert
+     * @param index Position from item to insert
      */
     public addAt(item: TSource, index): void;
+    /**
+     * Adds to the list the provided Array<TSource> object at specified index
+     * @param items Items to insert
+     * @param index Position from items to insert
+     */
     public addAt(items: Array<TSource>, index): void;
+    /**
+     * Adds to the list the provided List<TSource> object at specified index
+     * @param items Items to insert
+     * @param index Position from items to insert
+     */
     public addAt(items: List<TSource>, index): void;
     public addAt(itemOrItems: TSource|List<TSource>|Array<TSource>, index): void
     {        

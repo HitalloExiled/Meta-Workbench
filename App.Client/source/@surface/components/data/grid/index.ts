@@ -4,15 +4,16 @@ import { List }          from "@surface/core/enumerable/list";
 import { Row }           from "@surface/components/data/row";
 import { Column }        from "@surface/components/data/column";
 
-import template   from "index.html";
+import template from "index.html";
+import style    from "index.scss";
 
-@component("data-grid", template)
+@component("data-grid", template, style)
 export class Grid extends CustomElement
 {
-    private _rows:     List<Row>;
-    private _headers:  List<Column> = super.attachAll<Column>("data-column");
+    private _rows:    List<Row>    = new List<Row>();
+    private _headers: List<Column> = super.attachAll<Column>("data-column");
     
-    private _source: Iterable<Object>;
+    private _source: Iterable<Object> = [1, 2, 3];
     public get source(): Iterable<Object>
     {
         return this._source;
@@ -48,16 +49,35 @@ export class Grid extends CustomElement
 
     public initialize(): void
     {
+        let headerRow = new Row();
+        this._headers.forEach
+        (
+            (x, i) =>
+            {
+                
+                let column = new Column();
+                column.innerText = x.header;
+                headerRow.addColumn(column);
+
+            }
+        );
+        this.addRow(headerRow);
+
         for (let item of this._source)
         {
             let row = new Row();
-            for (let column of this._headers)
-            {
-                column.nodeValue = item.toString();
-                row.columns.add(column);
-            }
+            this._headers.forEach
+            (
+                () =>
+                {
+                    let column = new Column();
+                    column.innerText = item.toString();
+                    row.addColumn(column);
+                }
+            );
 
             this.addRow(row);
         }
+
     }
 }

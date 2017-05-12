@@ -11,7 +11,7 @@ export class ProductCatalog extends View
 {
     public get title(): string
     {
-        return "Lista de produtos";
+        return "Catalógo de produtos";
     }
 
     constructor()
@@ -19,3 +19,5 @@ export class ProductCatalog extends View
         super();
     }
 }
+
+export default ProductCatalog;

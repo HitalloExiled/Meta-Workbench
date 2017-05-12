@@ -19,3 +19,5 @@ export class ProductRegistration extends View
         super();
     }
 }
+
+export default ProductRegistration;

@@ -1,0 +1,23 @@
+:host
+{
+    display: table-cell;
+    vertical-align: middle;
+    > content-area
+    {
+        width:   100%;
+        display: flex;
+        
+        ::slotted(*)
+        { margin: auto; }
+        
+        &[even]
+        {
+            background-color: #006600;
+        }
+
+        &[odd]
+        {
+            background-color: #00ff00;
+        }
+    }
+}

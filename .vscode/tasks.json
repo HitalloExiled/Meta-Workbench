@@ -36,7 +36,7 @@
             "taskName":       "watch",
             "command":        "cmd",
             "isShellCommand": true,
-            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\ts-node --project ./App.Client/tasks ./App.Client/tasks/build.ts --dev --watch"],
+            "args":           ["/c", ".\\App.Client\\node_modules\\.bin\\tsc --project ./App.Client/tasks && node ./App.Client/tasks/build.js --dev --watch"],
             "showOutput":     "always",
             "isBackground":   true,
             "problemMatcher": "$tsc-watch"

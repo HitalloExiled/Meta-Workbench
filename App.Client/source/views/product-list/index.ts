@@ -33,3 +33,5 @@ export class ProductList extends View
         super();
     }
 }
+
+export default ProductList;
