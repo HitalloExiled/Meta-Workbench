@@ -15,7 +15,7 @@ export class Column extends CustomElement
 
 	public set header(value: string)
     {
-        super.letAttribute("header", value);
+        super.setAttribute("header", value);
 	}
 
     public get content(): HTMLElement

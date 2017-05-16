@@ -15,7 +15,7 @@ export class MenuItem extends CustomElement
 
     public set active(value: boolean)
     {
-        super.letAttribute("active", value ? "true" : "false");
+        super.setAttribute("active", value ? "true" : "false");
     }
     public get label(): string
     {
@@ -24,7 +24,7 @@ export class MenuItem extends CustomElement
 
     public set label(value: string)
     {
-        super.letAttribute("label", value);
+        super.setAttribute("label", value);
     }
     
     private _subMenuItems: Array<MenuItem>;
@@ -45,6 +45,6 @@ export class MenuItem extends CustomElement
 
     public set action(value: string)
     {
-        super.letAttribute("action", value);
+        super.setAttribute("action", value);
     }
 }

@@ -28,6 +28,7 @@ export function observe(...attributes: Array<string>): ClassDecorator
     return (target: Constructor<CustomElement>) =>
     {
         Object.defineProperty(target, "observedAttributes", { get: () => attributes } );
+        target.prototype[CustomElement.Symbols.observedAttributes] = attributes;
     }
 }
 

@@ -44,7 +44,6 @@ export class Grid extends CustomElement
     public constructor()
     {
         super();
-        this.initialize();
     }
 
     public initialize(): void
@@ -78,6 +77,10 @@ export class Grid extends CustomElement
 
             this.addRow(row);
         }
+    }
 
+    public connectedCallback(): void
+    {
+        this.initialize();
     }
 }

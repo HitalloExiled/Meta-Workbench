@@ -1,13 +1,19 @@
 ﻿import "@surface/core/extensions";
 
-import { traverseElement, parseTextNode } from "@surface/core/utils";
+//import { traverseElement, parseTextNode } from "@surface/core/utils";
 import { List }                           from "@surface/core/enumerable/list";
+import { EventStack }                     from "@surface/core/event-stack";
+import { ElementBinder }                  from "@surface/core/element-binder";
 
 export abstract class CustomElement extends HTMLElement
 {
-    private _template: Nullable<HTMLTemplateElement>;
-    protected $preventAttributeChangedCallback: boolean = false;
+    private _onAtributeChanged = new EventStack<this, CustomElement.AtributeChangedArgs>();
+    public get onAtributeChanged(): EventStack<this, CustomElement.AtributeChangedArgs>
+    {
+        return this._onAtributeChanged;
+    }
 
+    private _template: Nullable<HTMLTemplateElement>;
 	public get template(): Nullable<HTMLTemplateElement>
     {
 		return this._template;
@@ -39,21 +45,7 @@ export abstract class CustomElement extends HTMLElement
 
     private applyDateBind(content: Node): void
     {
-        traverseElement
-        (
-            content,
-            node =>
-            {
-                if (node.nodeType == Node.TEXT_NODE)
-                    parseTextNode(node, this);
-            }
-        );
-    }
-
-    protected letAttribute(attributeName: string, value: string): void
-    {
-        this.$preventAttributeChangedCallback = true;
-        super.setAttribute(attributeName, value);
+        new ElementBinder(this, content).bind();
     }
 
     /** Query shadow root use string selector and returns all elements */
@@ -110,32 +102,42 @@ export abstract class CustomElement extends HTMLElement
     }
 
     /** Called when the element is created or upgraded */
-    public connectedCallback(): void
+    protected connectedCallback(): void
     { }
 
     /** Called when the element is inserted into a document, including into a shadow tree */
-    public disconnectedCallback(): void
+    protected disconnectedCallback(): void
     { }
 
     /**
      * Called when an attribute is changed, appended, removed, or replaced on the element.
      * Only called for observed attributes.
      */
-    public attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string): void
+    protected attributeChangedCallback(attributeName: string, oldValue: string, newValue: string, namespace: string): void
     {
-        if (this.$preventAttributeChangedCallback)
-        {
-            this.$preventAttributeChangedCallback = false;
-            return;
-        }
-
         if (attributeName in this.style)
             this.style[attributeName] = newValue;
-        else
-            this[attributeName] = newValue;
+        
+        this._onAtributeChanged.fire(this, { attributeName, oldValue, newValue, namespace })
     }
 
     /** Called when the element is adopted into a new document */
-    public adoptedCallback(oldDocument: Document, newDocument: Document): void
+    protected adoptedCallback(oldDocument: Document, newDocument: Document): void
     { }
+}
+
+export namespace CustomElement
+{
+    export type AtributeChangedArgs =
+    {
+        attributeName: string,
+        oldValue:      string,
+        newValue:      string,
+        namespace:     string
+    }
+
+    export namespace Symbols
+    {
+        export const observedAttributes = Symbol("observedAttributes");
+    };
 }
