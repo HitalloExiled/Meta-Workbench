@@ -102,6 +102,11 @@
         }
     }
 
+    public zip<TCollection, TResult>(collection: TCollection, selector: Func3<TSource, TCollection, number, TResult>): Enumerable<TResult>
+    {
+        return new ZipIterator(this, collection, selector);
+    }
+
     /** Convert enumerable to a derived type. Note that no type checking is performed at runtime */
     public cast<T extends TSource>(): Enumerable<T>
     {
@@ -199,6 +204,25 @@ class SelectManyIterator<TSource, TCollection, TResult> extends Enumerable<TResu
                     yield selector(iteration, index);
                     index++;
                 }
+            }
+        }
+    }
+}
+
+class ZipIterator<TSource, TCollection, TResult> extends Enumerable<TResult>
+{
+    public [Symbol.iterator]: () => Iterator<TResult>;
+
+    public constructor(source: Iterable<TSource>, collection: TCollection, selector: Func3<TSource, TCollection, number, TResult>)
+    {
+        super();
+        this[Symbol.iterator] = function* ()
+        {
+            let index = 0;
+            for (const item of source)
+            {
+                yield selector(item, collection[index], index);
+                index++;
             }
         }
     }

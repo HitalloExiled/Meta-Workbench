@@ -22,6 +22,16 @@ declare global
         /** Cast NodeList into List<Node> */
         toList(): List<Node>;
     }
+
+    interface Iterable<T>
+    {
+        asEnumerable(): Enumerable<T>;
+    }
+
+    interface NamedNodeMap
+    {
+        asEnumerable(): Enumerable<Attr>;
+    }
 }
 
 Array.prototype.flatten = function<T>(this: Array<T>)
@@ -76,4 +86,9 @@ declare module "@surface/core/enumerable"
 Enumerable.prototype.toList = function<T>(this: Enumerable<T>)
 {
     return new List(this.toArray());
+}
+
+NamedNodeMap.prototype.asEnumerable = function(this: NamedNodeMap)
+{
+    return Array.from(this).asEnumerable();
 }

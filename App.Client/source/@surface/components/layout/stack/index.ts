@@ -12,19 +12,19 @@ export namespace Stack
 @component("layout-stack", template, style)
 @observe("width", "height", "orientation")
 export class Stack extends CustomElement
-{
-    private _orientation: Stack.Orientation;
-    
+{    
     @metadata
     public get orientation(): Stack.Orientation
-    {
-        this._orientation
-        return this._orientation;
+    {        
+        if (super.getAttribute("h") || super.getAttribute("horizontal"))
+            return "horizontal";
+        else
+            return "vertical";
     }
 
     public set orientation(value: Stack.Orientation)
     {
-         this._orientation = value;
+         super.setAttribute(value, "");
     }
     
     constructor()

@@ -34,9 +34,10 @@ declare module '*.css'
     export default  _;
 }
 
-declare type Func<TResult>          = () => TResult;
-declare type Func1<T1, TResult>     = (arg: T1) => TResult;
-declare type Func2<T1, T2, TResult> = (arg1: T1, arg2: T2) => TResult;
+declare type Func<TResult>              = () => TResult;
+declare type Func1<T1, TResult>         = (arg: T1) => TResult;
+declare type Func2<T1, T2, TResult>     = (arg1: T1, arg2: T2) => TResult;
+declare type Func3<T1, T2, T3, TResult> = (arg1: T1, arg2: T2, arg3: T3) => TResult;
 
 declare type Action          = () => void;
 declare type Action1<T1>     = (arg: T1) => void;

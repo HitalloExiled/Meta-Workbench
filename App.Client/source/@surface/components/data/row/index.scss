@@ -2,3 +2,13 @@
 {
     display: table-row;
 }
+
+:host([even])
+{
+    background-color: #56ded2;
+}
+
+:host([odd])
+{
+    background-color: #3d9e9e;
+}

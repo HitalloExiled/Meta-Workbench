@@ -1,9 +1,8 @@
 ﻿import "@surface/core/extensions";
 
-//import { traverseElement, parseTextNode } from "@surface/core/utils";
-import { List }                           from "@surface/core/enumerable/list";
-import { EventStack }                     from "@surface/core/event-stack";
-import { ElementBinder }                  from "@surface/core/element-binder";
+import { List }          from "@surface/core/enumerable/list";
+import { EventStack }    from "@surface/core/event-stack";
+import { ElementBinder } from "@surface/core/element-binder";
 
 export abstract class CustomElement extends HTMLElement
 {
@@ -139,5 +138,5 @@ export namespace CustomElement
     export namespace Symbols
     {
         export const observedAttributes = Symbol("observedAttributes");
-    };
+    }
 }

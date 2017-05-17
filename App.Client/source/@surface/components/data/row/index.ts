@@ -11,6 +11,26 @@ export class Row extends CustomElement
 {
     private _columns: List<Column> = new List<Column>();
 
+    public get isHeader(): boolean
+    {
+        return !!super.getAttribute("header");
+    }
+
+    public set isHeader(value: boolean)
+    {
+        value ? super.setAttribute("header", "") : super.removeAttribute("header");
+    }
+
+    public get even(): boolean
+    {
+        return !!super.getAttribute("even");
+    }
+
+    public set even(value: boolean)
+    {
+        value ? super.setAttribute("even", "") : super.setAttribute("odd", "");
+    }
+
     public set columns(value: List<Column>)
     {
         this._columns.forEach(x => this.removeChild(x));

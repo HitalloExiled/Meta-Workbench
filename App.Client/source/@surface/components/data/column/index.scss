@@ -2,22 +2,44 @@
 {
     display: table-cell;
     vertical-align: middle;
-    > content-area
-    {
-        width:   100%;
-        display: flex;
-        
-        ::slotted(*)
-        { margin: auto; }
-        
-        &[even]
-        {
-            background-color: #006600;
-        }
 
-        &[odd]
+    > container-area
+    {
+        display:    flex;
+        
+        > content-area
         {
-            background-color: #00ff00;
+            margin: auto;
+            width:  100%;
+            height: 100%;
+            margin:     auto;
+            text-align: center;
         }
     }
+}
+
+:host([alignment="left"])
+{
+    > container-area > content-area
+    {
+        margin-left: 0;
+        text-align:  left;
+    }
+}
+
+:host([alignment="right"])
+{
+    > container-area > content-area
+    {
+        margin-right: 0;
+        text-align:   right;
+    }
+}
+
+:host([header])
+{
+    background-color: #096d64;
+    color: white;
+    font-size: 14px;
+    border-bottom: solid 4px #024402;
 }

@@ -5,7 +5,6 @@ import template from "index.html";
 import style    from "index.scss";
 
 @component("data-column", template, style)
-//@observe("header")
 export class Column extends CustomElement
 {
 	public get header(): string

@@ -11,8 +11,7 @@
 
 :host,
 :host([v]),
-:host([vertical]),
-:host([orientation="vertical"])
+:host([vertical])
 {
     flex-direction: column;
     width:  100%;
@@ -26,8 +25,7 @@
 }
 
 :host([h]),
-:host([horizontal]),
-:host([orientation="horizontal"])
+:host([horizontal])
 {
     flex-direction: row;
     height: 100%;
@@ -40,10 +38,9 @@
     
 }
 
-:host([stretch][margin="*"])
-:host([stretch][margin="*"][v])
+:host([stretch][margin="*"]),
+:host([stretch][margin="*"][v]),
 :host([stretch][margin="*"][vertical])
-:host([stretch][margin="*"][orientation="vertical"])
 {
     ::slotted(*)
     {
@@ -52,8 +49,7 @@
 }
 
 :host([stretch][margin][h]),
-:host([stretch][margin][horizontal]),
-:host([stretch][margin][orientation="horizontal"])
+:host([stretch][margin][horizontal])
 {
     ::slotted(*)
     {
@@ -63,33 +59,27 @@
 
 :host([reverse])
 :host([reverse][v]),
-:host([reverse][vertical]),
-:host([reverse][orientation="vertical"])
+:host([reverse][vertical])
 {
     flex-direction: column-reverse;
 }
 
 :host([reverse][h]),
-:host([reverse][horizontal]),
-:host([reverse][orientation="horizontal"])
+:host([reverse][horizontal])
 {
     flex-direction: row-reverse;
 }
 
 :host([stretch]),
 :host([stretch][v]),
-:host([stretch][vertical]),
-:host([stretch][orientation="vertical"])
+:host([stretch][vertical])
 :host([stretch][h]),
-:host([stretch][horizontal]),
-:host([stretch][orientation="horizontal"])
+:host([stretch][horizontal])
 :host([stretch][reverse])
 :host([stretch][v][reverse]),
-:host([stretch][vertical][reverse]),
-:host([stretch][orientation="vertical"][reverse]),
+:host([stretch][vertical][reverse])
 :host([stretch][h][reverse]),
-:host([stretch][horizontal][reverse]),
-:host([stretch][orientation="horizontal"][reverse])
+:host([stretch][horizontal][reverse])
 {
     width:  100%;
     height: 100%;
