@@ -23,11 +23,6 @@ declare global
         toList(): List<Node>;
     }
 
-    interface Iterable<T>
-    {
-        asEnumerable(): Enumerable<T>;
-    }
-
     interface NamedNodeMap
     {
         asEnumerable(): Enumerable<Attr>;
