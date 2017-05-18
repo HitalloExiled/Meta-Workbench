@@ -3,6 +3,8 @@ import { List }       from "@surface/core/enumerable/list";
 
 declare global
 {
+
+
     interface Array<T>
     {
         /** Flatten multidimensional arrays */
@@ -13,6 +15,16 @@ declare global
         toList(): List<T>;
     }
 
+    interface Object
+    {
+        deepMember(path: string): Nullable<Object>;
+    }
+
+    interface NamedNodeMap
+    {
+        asEnumerable(): Enumerable<Attr>;
+    }
+
     interface NodeList
     {
         /** Casts NodeList into Array<Node> */
@@ -21,16 +33,6 @@ declare global
         asEnumerable(): Enumerable<Node>;
         /** Cast NodeList into List<Node> */
         toList(): List<Node>;
-    }
-
-    interface Iterable<T>
-    {
-        asEnumerable(): Enumerable<T>;
-    }
-
-    interface NamedNodeMap
-    {
-        asEnumerable(): Enumerable<Attr>;
     }
 }
 
@@ -59,6 +61,11 @@ Array.prototype.toList = function <T>(this: Array<T>)
     return new List(this);
 }
 
+NamedNodeMap.prototype.asEnumerable = function(this: NamedNodeMap)
+{
+    return Array.from(this).asEnumerable();
+}
+
 NodeList.prototype.toArray = function <T extends Node>(this: NodeListOf<T>)
 {
     return Array.from(this);
@@ -74,6 +81,22 @@ NodeList.prototype.toList = function <T extends Node>(this: NodeListOf<T>)
     return Array.from(this).toList();
 }
 
+Object.prototype.deepMember = function (this: Object, path: string)
+{
+    let childs = path.split(".");
+
+    let current = this; 
+    for (let child of childs)
+    {
+        current = current[child];
+
+        if (!current)
+            return null;
+    }
+
+    return current;
+}
+
 declare module "@surface/core/enumerable"
 {
     interface Enumerable<TSource>
@@ -86,9 +109,4 @@ declare module "@surface/core/enumerable"
 Enumerable.prototype.toList = function<T>(this: Enumerable<T>)
 {
     return new List(this.toArray());
-}
-
-NamedNodeMap.prototype.asEnumerable = function(this: NamedNodeMap)
-{
-    return Array.from(this).asEnumerable();
 }

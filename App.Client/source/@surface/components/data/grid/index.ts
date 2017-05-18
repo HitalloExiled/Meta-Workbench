@@ -61,7 +61,7 @@ export class Grid extends CustomElement
         );
         this.addRow(headerRow);
 
-        this._source.asEnumerable().forEach
+        Array.from(this._source).asEnumerable().forEach
         (
             (item, index) =>
             {
