@@ -18,7 +18,6 @@ type Binder =
         right?:     string,
         remaining?: string
     },
-    action: Action,
     bindType: BindType;
 }
 
@@ -135,14 +134,16 @@ export class ElementBinder<T extends CustomElement>
 
     private bindTextNode(node: Node, context: object): void
     {
-        let onChange: Action = () => ({});
+        let binders: Array<Func<string>> = [];
+        let onChange = () => node.nodeValue = binders.map(x => x()).join("");
+
         if (node.nodeValue && node.nodeValue.indexOf("{{") > -1)
         {
             let groups = node.nodeValue.match(/(.*?)(?:{{ *(?:(\w+|\.)) *}})(.*?)|(.*)/g)
             if (groups && groups.length > 0)
             {
                 let matches = groups.map(x => x && /(.*?)(?:{{ *((?:\w|\.)+) *}})(.*?)|(.*)/g.exec(x) || [""]);
-                let fragments = matches.map
+                binders = matches.map
                 (
                     item =>
                     {
@@ -160,18 +161,16 @@ export class ElementBinder<T extends CustomElement>
                                 right:     right     || "",
                                 remaining: remaining || ""
                             },
-                            action:   onChange,
                             bindType: BindType.text
                         }
 
                         if (match)
-                            return this.applyBind(binder);
+                            this.applyBind(binder, onChange);
 
                         return () => (left || "") + (context[match] || "") + (right || "") + (remaining || "");
                     }
                 );
-
-                onChange = () => node.nodeValue = fragments.map(x => x()).join("");
+                
                 onChange();
             }
         }
@@ -179,9 +178,9 @@ export class ElementBinder<T extends CustomElement>
 
     private bindAttribute(node: Node, context: object): void
     {
-        let onChange: () => void;
-
         let binders: Array<Action> = []; 
+        let onChange = () => binders.forEach(x => x());
+
         node.attributes.asEnumerable().forEach
         (
             attribute =>
@@ -197,17 +196,15 @@ export class ElementBinder<T extends CustomElement>
                         node:          node,
                         attribute:     attribute.name,
                         textFragments: { match: match && match[1] || "" },
-                        action:        onChange,
                         bindType:      BindType.attribute
                     }
 
                     if (property)
-                        binders.push(this.applyBind(binder));
+                        binders.push(this.applyBind(binder, onChange));
                 }
             }
         );
-
-        onChange = () => binders.forEach(x => x && x());
+        
         onChange();
     }
 
@@ -291,7 +288,7 @@ export class ElementBinder<T extends CustomElement>
     }
     */
 
-    private applyBind(binder: Binder): Action
+    private applyBind(binder: Binder, onChange: Action): Action
     {
         let action: Action = () => ({});
 
@@ -325,7 +322,7 @@ export class ElementBinder<T extends CustomElement>
             context[CustomElement.Symbols.onAttributeChanged] = function (this: CustomElement, attributeName: string, oldValue: string, newValue: string, namespace: string): void
             {
                 if (attributeName == property)
-                    binder.action();
+                    onChange();
 
                 if (onAttributeChanged)
                     onAttributeChanged.call(context, attributeName, oldValue, newValue, namespace);
@@ -351,7 +348,7 @@ export class ElementBinder<T extends CustomElement>
                         set: (value: any) =>
                         {
                             setter && setter.call(context, value);
-                            binder.action();
+                            onChange();
                         }
                     }
                 );
