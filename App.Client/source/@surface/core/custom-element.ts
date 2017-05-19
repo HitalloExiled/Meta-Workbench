@@ -1,17 +1,10 @@
 ﻿import "@surface/core/extensions";
 
 import { List }          from "@surface/core/enumerable/list";
-import { EventStack }    from "@surface/core/event-stack";
 import { ElementBinder } from "@surface/core/element-binder";
 
 export abstract class CustomElement extends HTMLElement
 {
-    private _onAtributeChanged = new EventStack<this, CustomElement.AtributeChangedArgs>();
-    public get onAtributeChanged(): EventStack<this, CustomElement.AtributeChangedArgs>
-    {
-        return this._onAtributeChanged;
-    }
-
     private _template: Nullable<HTMLTemplateElement>;
 	public get template(): Nullable<HTMLTemplateElement>
     {
@@ -117,7 +110,8 @@ export abstract class CustomElement extends HTMLElement
         if (attributeName in this.style)
             this.style[attributeName] = newValue;
         
-        this._onAtributeChanged.fire(this, { attributeName, oldValue, newValue, namespace })
+        if (this[CustomElement.Symbols.onAttributeChanged])
+            this[CustomElement.Symbols.onAttributeChanged](attributeName, oldValue, newValue, namespace);
     }
 
     /** Called when the element is adopted into a new document */
@@ -137,6 +131,16 @@ export namespace CustomElement
 
     export namespace Symbols
     {
-        export const observedAttributes = Symbol("observedAttributes");
+        export const observedAttributes = Symbol.for("observedAttributes");
+        export const onAttributeChanged = Symbol.for("onAttributeChanged");
     }
+}
+
+export interface CustomElement
+{
+    /*
+        Wainting support
+        [observedAttributes]: Array<string>;
+        [CustomElement.Symbols.onAttributeChanged]: (attributeName: string, oldValue: string, newValue: string, namespace: string) => void;
+    */
 }

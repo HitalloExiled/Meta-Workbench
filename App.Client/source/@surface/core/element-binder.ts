@@ -1,9 +1,16 @@
 import { CustomElement } from "@surface/core/custom-element";
 
+enum BindType
+{
+    attribute = 1,
+    text      = 2
+}
+
 export class ElementBinder<T extends CustomElement>
 {
     private _context: T;
     private _content: Node;
+
 
     public constructor(context: T, content: Node)
     {
@@ -13,94 +20,57 @@ export class ElementBinder<T extends CustomElement>
 
     public bind(): void
     {
-        this.traverseElement(this._content);
+        this.traverseElement(this._content, this._context);
     }
 
-    private traverseElement(node: Node): void
+    private traverseElement(node: Node, context: object): void
     {    
         for (let i = 0; i < node.childNodes.length; i++)
         {
             let currentNode = node.childNodes[i];
             if (currentNode.nodeType == Node.TEXT_NODE)
-                this.bindTextNode(currentNode);
+                this.bindTextNode(currentNode, context);
 
             if (currentNode.attributes)
-                this.bindAttribute(currentNode);
+                this.bindAttribute(currentNode, context);
 
-            this.traverseElement(currentNode);
+            this.traverseElement(currentNode, context);
         }
     }
 
-    private bindTextNode(node: Node): void
+    private bindTextNode(node: Node, context: object): void
     {
-        let onChange: () => void;
+        let binders: Array<Func<string>> = [];
+        let onChange = () => node.nodeValue = binders.map(x => x()).join("");
+
         if (node.nodeValue && node.nodeValue.indexOf("{{") > -1)
         {
-            let groups = node.nodeValue.match(/(.*?)(?:{{ *(\w+) *}})(.*?)|(.*)/g)
+            let groups = node.nodeValue.match(/(.*?)(?:{{ *(?:(\w+|\.)) *}})(.*?)|(.*)/g)
             if (groups && groups.length > 0)
             {
-                let matches = groups.map(x => x && /(.*?)(?:{{ *(\w+) *}})(.*?)|(.*)/g.exec(x) || [""]);
-                let fragments = matches.map
+                let matches = groups.map(x => x && /(.*?)(?:{{ *((?:\w|\.)+) *}})(.*?)|(.*)/g.exec(x) || [""]);
+                matches.forEach
                 (
                     item =>
                     {
-                        let [left, property, right, remaining] = item.slice(1);                        
-
+                        let [left, property, right, remaining] = item.slice(1);
+                        
                         if (property)
-                        {
-                            let observedAttributes = this._context[CustomElement.Symbols.observedAttributes] as Array<string>;
-                            if (observedAttributes && observedAttributes.filter(x => x == property).length > 0)
-                            {
-                                this._context.onAtributeChanged.add
-                                (
-                                    (sender, args) =>
-                                    {
-                                        if (args.attributeName == property) 
-                                            onChange();
-                                    }
-                                );
-                            }
-                            else
-                            {
-                                let descriptor = Object.getOwnPropertyDescriptor(this._context.constructor.prototype, property)
-                                if (descriptor)
-                                {
-                                    let getter = descriptor.get;
-                                    let setter = descriptor.set;
-                                    
-                                    Object.defineProperty
-                                    (
-                                        this._context,
-                                        property,
-                                        {
-                                            get: () => getter && getter.call(this._context),
-                                            set: (value: any) =>
-                                            {
-                                                setter && setter.call(this._context, value);
-                                                onChange();
-                                            }
-                                        }
-                                    );
-                                }
-                            }
-                        }
-                        return () => (left || "") + (this._context[property] || "") + (right || "") + (remaining || "");
+                            this.applyBind(context, node, property, "", BindType.text, onChange);
+
+                        binders.push(() => (left || "") + (context[property] || "") + (right || "") + (remaining || ""));
                     }
                 );
-
-                onChange = () => node.nodeValue = fragments.map(x => x()).join("");
+                
                 onChange();
             }
         }
     }
 
-    private bindAttribute(node: Node): void
+    private bindAttribute(node: Node, context: object): void
     {
-        type Binder = { source: string, target: string };
-
-        let onChange: () => void;
-
-        let binders: Array<Binder> = [];
+        let binders: Array<Action> = []; 
+        let onChange = () => binders.forEach(x => x());
 
         node.attributes.asEnumerable().forEach
         (
@@ -108,55 +78,77 @@ export class ElementBinder<T extends CustomElement>
             {
                 if (attribute.value.indexOf("{{") > -1)
                 {
-                    let match = /{{ *(\w+) *}}/.exec(attribute.value);
+                    let match    = /{{ *((?:\w+|\.)) *}}/.exec(attribute.value);
                     let property = match && match[1] || "";
+
                     if (property)
-                    {                        
-                        let observedAttributes = this._context[CustomElement.Symbols.observedAttributes] as Array<string>;
-                        if (observedAttributes && observedAttributes.filter(x => x == property).length > 0)
-                        {
-                            binders.push({ source: property, target: attribute.name });
-
-                            this._context.onAtributeChanged.add
-                            (
-                                (sender, args) =>
-                                {
-                                    if (args.attributeName == property) 
-                                        onChange();
-                                }
-                            );
-                        }
-                        else
-                        {
-                            let descriptor = Object.getOwnPropertyDescriptor(this._context.constructor.prototype, property)
-                            if (descriptor)
-                            {
-                                binders.push({ source: property, target: attribute.name });
-
-                                let getter = descriptor.get;
-                                let setter = descriptor.set;
-                                
-                                Object.defineProperty
-                                (
-                                    this._context,
-                                    property,
-                                    {
-                                        get: () => getter && getter.call(this._context),
-                                        set: (value: any) =>
-                                        {
-                                            setter && setter.call(this._context, value);
-                                            onChange();
-                                        }
-                                    }
-                                );
-                            }
-                        }
-                    }
+                        binders.push(this.applyBind(context, node, property, attribute.name, BindType.attribute, onChange));
                 }
             }
         );
-
-        onChange = () => binders.forEach(x => node[x.target] = this._context[x.source]);
+        
         onChange();
+    }
+
+    private applyBind(context: object, node: Node, property: string, attribute, bindType: BindType, onChange: Action): Action
+    {
+        let action: Action = () => ({});
+
+        if (property.indexOf(".") > -1)
+        {
+            let childrens = property.split(".");
+            property = childrens.pop() || "";
+            for (let child of childrens)
+            {
+                context = context[child];
+                if (!context)
+                    break;
+            }
+        }
+
+        let observedAttributes = context[CustomElement.Symbols.observedAttributes] as Array<string>;
+        if (observedAttributes && context instanceof CustomElement && observedAttributes.filter(x => x == property).length > 0)
+        {
+            if (bindType == BindType.attribute)
+                action = () => node[attribute] = context[property];
+            
+            let onAttributeChanged = context[CustomElement.Symbols.onAttributeChanged];
+            context[CustomElement.Symbols.onAttributeChanged] = function (this: CustomElement, attributeName: string, oldValue: string, newValue: string, namespace: string): void
+            {
+                if (attributeName == property)
+                    onChange();
+
+                if (onAttributeChanged)
+                    onAttributeChanged.call(context, attributeName, oldValue, newValue, namespace);
+            }
+        }
+        else
+        {
+            let descriptor = Object.getOwnPropertyDescriptor(context.constructor.prototype, property)
+            if (descriptor)
+            {
+                if (bindType == BindType.attribute)
+                    action = () => node[attribute] = context[property];
+
+                let getter = descriptor.get;
+                let setter = descriptor.set;
+                
+                Object.defineProperty
+                (
+                    context,
+                    property,
+                    {
+                        get: () => getter && getter.call(context),
+                        set: (value: any) =>
+                        {
+                            setter && setter.call(context, value);
+                            onChange();
+                        }
+                    }
+                );
+            }
+        }
+
+        return action;
     }
 }

@@ -1,6 +1,8 @@
 <template>
     <data-grid source="{{source}}" width="100%" margin="10px auto 10px auto">
-        <data-column header="Coluna 1" alignment="center"></data-column>
-        <data-column header="Coluna 2" alignment="center"></data-column>
+        <data-header header="Coluna 1" bound="col1" alignment="center"></data-header>
+        <data-header header="Coluna 2" bound="col2" alignment="center"></data-header>
+        <data-footer bound="col1" alignment="center"></data-footer>
+        <data-footer bound="col2" alignment="center"></data-footer>
     </data-grid>
 </template>

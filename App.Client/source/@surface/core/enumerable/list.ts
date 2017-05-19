@@ -36,7 +36,7 @@ export class List<TSource> extends Enumerable<TSource>
      */
     public add(item: TSource): void
     {
-        this._source.push[0];
+        this._source.push(item);
     }
 
     /**

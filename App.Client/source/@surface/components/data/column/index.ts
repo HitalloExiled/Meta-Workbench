@@ -1,5 +1,5 @@
 import { CustomElement } from "@surface/core/custom-element";
-import { component } from "@surface/core/decorators";
+import { component }     from "@surface/core/decorators";
 
 import template from "index.html";
 import style    from "index.scss";
@@ -7,20 +7,22 @@ import style    from "index.scss";
 @component("data-column", template, style)
 export class Column extends CustomElement
 {
-	public get header(): string
+    public get content(): Nullable<HTMLElement>
     {
-		return super.getAttribute("header") || "";
-	}
+        return this.firstElementChild as Nullable<HTMLElement>;
+    }
 
-	public set header(value: string)
+    private _value: Nullable<Object>;
+    public get value(): Nullable<Object>
     {
-        super.setAttribute("header", value);
-	}
+        return this._value;
+    }
 
-    public get content(): HTMLElement
+    public set value(value: Nullable<Object>)
     {
-        return this.attach("*");
-    }  
+        this.innerText = value && value.toString() || "";
+        this._value = value
+    }
 
     public constructor()
     {

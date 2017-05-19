@@ -8,8 +8,8 @@ import { MenuItem } from "@surface/components/action/menu-item/index";
 import "@surface/components/layout/window";
 import { Window } from "@surface/components/layout/window";
 
-import { component }     from "@surface/core/decorators";
 import { CustomElement } from "@surface/core/custom-element";
+import { component }     from "@surface/core/decorators";
 import { View }          from "@surface/core/view";
 import { routeTo }       from "@surface/core/router";
 import { loadView }      from "codebase/view-loader";
